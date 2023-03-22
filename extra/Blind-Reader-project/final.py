@@ -1,7 +1,7 @@
 # Dependencies are imported here.
 # Check out ---->  https://cloud.google.com/python/docs/ for instruction to install the G-cloud dependencies.
 import RPi.GPIO as GPIO
-import time,os,pygame,datetime
+import time, os, pygame, datetime
 from picamera import PiCamera
 from google.cloud import vision
 from google.cloud.vision import types
