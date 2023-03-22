@@ -3,9 +3,9 @@
 Uses Google Python Style Guide: https://google.github.io/styleguide/pyguide.html
 """
 
-#from camera import *
+# from camera import *
 from configparser import ConfigParser
-#from motor import *
+# from motor import *
 from pathlib import Path
 from reader import *
 
