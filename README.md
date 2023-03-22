@@ -11,4 +11,6 @@ Modules:
 Work:
     1. Đan : 
     2. Lương + Hải : 
-    3. Nhật : 
+    3. Nhật :
+
+Github page : https://github.com/boudhayan-dev/Blind-Reader-project 
