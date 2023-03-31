@@ -11,7 +11,7 @@ def speak(inp_str):
 
     
 if choice=='1':
-    image_path=('./test.jpg')
+    image_path=('./test.png')
 else:
     from time import sleep as delay
     input("\n\nPress Enter to take shot in 3 sec")

@@ -8,9 +8,13 @@ Modules:
     7. pip install pytesseract
     8. pip install tensorflow
 
+Text detection modules:
+    1. pip install tensorflow
+    2. pip install mltu==0.1.3
+
 Work:
-    1. Đan : 
-    2. Lương + Hải : 
-    3. Nhật :
+    1. Đan : Text detection
+    2. Lương + Hải : Camera
+    3. Nhật : Rasberry PI
 
 Github page : https://github.com/boudhayan-dev/Blind-Reader-project 
