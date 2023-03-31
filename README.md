@@ -14,6 +14,8 @@ Text detection modules:
 1. pip install mltu==0.1.3
 2. pip install boto3
 
+Dataset: https://academictorrents.com/details/3d0b4f09080703d2a9c6be50715b46389fdb3af1
+
 Work:
 
 1. Đan : Text detection
