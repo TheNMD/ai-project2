@@ -31,7 +31,7 @@ else:
     speak("Photo captured , you can see it in Desktop , Google vision folder , test.jpg")
     image_path=('test.jpg')
     speak("Kindly wait , I am analyzing the image")
-api_key=str('AIzaSyBoGa3GWC5mxdyrtwqi0oVl7Ow8ENtMexw')
+api_key=str('None')
 
 image=image_analysis(api_key,image_path)
 

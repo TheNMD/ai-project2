@@ -11,8 +11,7 @@ Modules:
 
 Text detection modules:
 
-1. pip install tensorflow
-2. pip install mltu==0.1.3
+1. pip install mltu==0.1.3
 
 Work:
 
