@@ -1,38 +1,42 @@
 from PIL import Image
 from pytesseract import pytesseract
+import pyttsx3
 
-from gtts import gTTS
-
-from playsound import playsound
-
-def image2text(imagePath):
+def image2text(imageName):
     # Path to tesseract.exe
     pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-    # Opening the image & storing it in an image object
-    img = Image.open(imagePath)
+    # Opening the image and storing it in an image object
+    img = Image.open('./images/' + imageName + '.jpg')
 
     # Passing the image object to image_to_string() function extract the text from the image
     text = pytesseract.image_to_string(img)
 
     # Saving the extracted text
-    with open("./texts/sample.txt", "w+") as file:
+    with open('./texts/' + imageName + '.txt', "w+") as file:
         file.write(text)
 
-def text2speech(textPath):
-    # The text that you want to convert to audio
-    with open(textPath, "r+") as file:
-        text = file.read()
+def text2speech(textName, play):
+    engine = pyttsx3.init()
     
-    # Passing the text and language to the engine, 
-    audio = gTTS(text=text, lang='en', slow=False)
+    # The text that you want to convert to audio
+    with open('./texts/' + textName + '.txt', "r+") as file:
+        text = file.read()
+
+    # Setting voice sound and voice rate
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[1].id) # voices[0]
+    engine.setProperty("rate", 175) # default 200
     
     # Saving the converted audio in a mp3 format
-    audio.save("./audio/sample.mp3")
+    engine.save_to_file(text, './audio/' + textName + '.mp3')
 
-def playaudio(audioPath):
-    playsound(audioPath)
+    # Playing the audio
+    if play:
+        engine.say(text)
 
-# image2text('./images/sample.jpg')
-# text2speech('./texts/sample.txt')
-playaudio('./audio/sample.mp3')
+    engine.runAndWait()
+
+name = "sample3"
+image2text(name)
+text2speech(name, play=True)

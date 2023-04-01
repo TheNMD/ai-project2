@@ -1,0 +1,11 @@
+How to Center Align Text in CSS
+
+This is dummy text. This is more dummy text. This is more dummy text. This is
+more dummy text. This is more dummy text. This is more dummy text. This is more
+dummy text. This is more dummy text. This is more dummy text. This is more
+dummy text. This is more dummy text. This is more dummy text.
+
+The Explanation
+
+Using either the universal selector or type selector body and the CSS text-align
+property set to “center,” everything on the page will be centered.
