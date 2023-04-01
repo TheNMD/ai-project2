@@ -25,7 +25,6 @@ def text2speech(textPath):
         text = file.read()
     
     # Passing the text and language to the engine, 
-    # slow=False means the audio will have normal speed
     audio = gTTS(text=text, lang='en', slow=False)
     
     # Saving the converted audio in a mp3 format
