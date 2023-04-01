@@ -9,7 +9,6 @@ image_path = "./images/sample5.jpg"
 # Opening the image & storing it in an image object
 img = Image.open(image_path)
 
-
 # Passing the image object to
 # image_to_string() function
 # This function will
