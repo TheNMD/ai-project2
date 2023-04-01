@@ -14,7 +14,8 @@
 3. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
 
 # Text-to-speech modules:
-1.
+1. pip install gTTS
+2. pip install playsound
 
 # Work:
 1. Đan + Lương + Hải: Text detection

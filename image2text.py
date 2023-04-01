@@ -16,6 +16,6 @@ img = Image.open(image_path)
 text = pytesseract.image_to_string(img)
 
 # Displaying the extracted text
-file = open("result.txt", "w+")
+file = open("./results/sample5_result.txt", "w+")
 file.write(text)
 file.close()
