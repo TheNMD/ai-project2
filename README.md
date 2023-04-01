@@ -8,18 +8,17 @@
 7. pip install pytesseract
 8. pip install tensorflow
 
-# Text detection modules:
-1. pip install opencv-python
-2. pip install pytesseract
-3. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
+# Text detection modules:n
+1. pip install pytesseract
+2. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
 
 # Text-to-speech modules:
 1. pip install gTTS
-2. pip install playsound
+2. pip install playsound==1.2.2
 
 # Work:
 1. Đan + Lương + Hải: Text detection
-2. Nhật : Rasberry PI
+2. Nhật : Raspberry PI
 
 # Other :
 1. Dataset: https://academictorrents.com/details/3d0b4f09080703d2a9c6be50715b46389fdb3af1

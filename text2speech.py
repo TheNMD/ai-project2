@@ -3,7 +3,7 @@
 from gtts import gTTS
 
 # The text that you want to convert to audio
-mytext = 'Welcome to geeksforgeeks!'
+mytext = 'It would cost at least fifty pounds to buy one'
   
 # Language in which you want to convert
 language = 'en'
