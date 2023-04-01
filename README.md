@@ -1,5 +1,4 @@
-Raspberry PI modules:
-
+# Raspberry PI modules:
 1. pip install pygame
 2. pip install RPi.GPIO => Error can't install on Windows => https://raspberrypi.stackexchange.com/questions/34119/gpio-library-on-windows-while-developing
 3. pip install picamera => Error can't install on Windows => https://raspberrypi.stackexchange.com/questions/53146/picamera-python-library-alternatives
@@ -9,18 +8,19 @@ Raspberry PI modules:
 7. pip install pytesseract
 8. pip install tensorflow
 
-Text detection modules:
-
+# Text detection modules:
 1. pip install opencv-python
 2. pip install pytesseract
 3. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
 
-Work:
+# Text-to-speech modules:
+1.
 
+# Work:
 1. Đan + Lương + Hải: Text detection
 2. Nhật : Rasberry PI
 
-Other :
+# Other :
 1. Dataset: https://academictorrents.com/details/3d0b4f09080703d2a9c6be50715b46389fdb3af1
 2. https://github.com/boudhayan-dev/Blind-Reader-project 
 3. https://github.com/aman-17/Reader-for-Blind
