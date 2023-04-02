@@ -13,7 +13,8 @@
 2. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
 
 # Text-to-speech modules:
-1. pip install pyttsx3 (May not work on Pi)
+1. pip install pyttsx3 (May have to install Espeak on Pi)
+2. pip install playsound==1.2.2
 
 # Work:
 1. Đan + Lương + Hải: Text detection

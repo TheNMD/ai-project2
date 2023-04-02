@@ -1,5 +1,7 @@
 from PIL import Image
 from pytesseract import pytesseract
+from playsound import playsound
+
 import pyttsx3
 
 def image2text(imageName):
@@ -27,16 +29,20 @@ def text2speech(textName, play):
     voices = engine.getProperty("voices")
     engine.setProperty("voice", voices[1].id) # voices[0]
     engine.setProperty("rate", 175) # default 200
-    
-    # Saving the converted audio in a mp3 format
-    engine.save_to_file(text, './audio/' + textName + '.mp3')
+
+    # Saving the converted audio in a wav format
+    engine.save_to_file(text, './audio/' + textName + '.wav')
 
     # Playing the audio
     if play:
-        engine.say(text)
+        playaudio(textName)
 
     engine.runAndWait()
 
-name = "sample3"
+def playaudio(audioName):
+    playsound('./audio/' + audioName + '.wav')
+
+name = "sample1" # capture()
 image2text(name)
-text2speech(name, play=True)
+text2speech(name, play=False)
+playaudio(name)
