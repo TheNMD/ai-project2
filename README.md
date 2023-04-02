@@ -10,7 +10,9 @@
 
 # Text detection modules:n
 1. pip install pytesseract
-2. Install Tesseract OCR: https://digi.bib.uni-mannheim.de/tesseract/
+2. pip install opencv-python
+
+Install Tesseract-OCR: https://digi.bib.uni-mannheim.de/tesseract/
 
 # Text-to-speech modules:
 1. pip install pyttsx3 (May have to install Espeak on Pi)
@@ -20,7 +22,7 @@
 1. Đan + Lương + Hải: Text detection
 2. Nhật : Raspberry PI
 
-# Other :
+# Other:
 1. Dataset: https://academictorrents.com/details/3d0b4f09080703d2a9c6be50715b46389fdb3af1
 2. https://github.com/boudhayan-dev/Blind-Reader-project 
 3. https://github.com/aman-17/Reader-for-Blind

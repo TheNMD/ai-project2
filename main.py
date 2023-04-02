@@ -5,8 +5,10 @@ from playsound import playsound
 import pyttsx3
 
 def image2text(imageName):
+    # TODO How tesseract works, how to train tesseract on custom training data
+    
     # Path to tesseract.exe
-    pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
     # Opening the image and storing it in an image object
     img = Image.open('./images/' + imageName + '.jpg')
@@ -40,6 +42,7 @@ def text2speech(textName, play):
     engine.runAndWait()
 
 def playaudio(audioName):
+    # TODO Stop, replay, slowdown, jump ahead features
     playsound('./audio/' + audioName + '.wav')
 
 name = "sample1" # capture()
