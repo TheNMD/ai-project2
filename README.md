@@ -8,7 +8,7 @@
 7. pip install pytesseract
 8. pip install tensorflow
 
-# Text detection modules:n
+# Text detection modules:
 1. pip install pytesseract
 2. pip install opencv-python
 
