@@ -7,8 +7,8 @@ import pyttsx3
 def image2text(imageName):
     # TODO How tesseract works, how to train tesseract on custom training data
     
-    # Path to tesseract.exe
-    pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
+    # Comment the line below if run on Raspberry PI
+    # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
     # Opening the image and storing it in an image object
     img = Image.open('./images/' + imageName + '.jpg')
@@ -32,7 +32,7 @@ def text2speech(textName, play):
     engine.setProperty("voice", voices[1].id) # voices[0]
     engine.setProperty("rate", 175) # default 200
 
-    # Saving the converted audio in a wav format
+    # Saving the audio in a wav format
     engine.save_to_file(text, './audio/' + textName + '.wav')
 
     # Playing the audio
@@ -42,10 +42,10 @@ def text2speech(textName, play):
     engine.runAndWait()
 
 def playaudio(audioName):
-    # TODO Stop, replay, slowdown, jump ahead features
+    # TODO Play, Stop, Playback, ... features
     playsound('./audio/' + audioName + '.wav')
 
-name = "sample1" # capture()
+name = "sample1"
 image2text(name)
 text2speech(name, play=False)
-playaudio(name)
+#playaudio(name)
