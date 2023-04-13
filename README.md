@@ -1,14 +1,13 @@
 # Run the code
 1. cd ai-project2
-2. source ./venv/bin/activate
-3. python3 main.py
+2. python3 main.py
 
 # Text detection modules:
-1. pip install pytesseract
-2. Install Tesseract-OCR:
+1. Install Tesseract-OCR:
    Windows: https://digi.bib.uni-mannheim.de/tesseract/
    Linux: sudo apt install tesseract-ocr
 		  sudo apt install libtesseract-dev
+2. pip install pytesseract
 
 # Text-to-speech modules:
 1. sudo apt install espeak
