@@ -3,10 +3,6 @@
 2. source ./venv/bin/activate
 3. python3 main.py
 
-# Raspberry PI modules:
-1. pip install RPi.GPIO (Can't install on Windows)
-2. pip install picamera (Can't install on Windows)
-
 # Text detection modules:
 1. pip install pytesseract
 2. Install Tesseract-OCR:
@@ -15,9 +11,9 @@
 		  sudo apt install libtesseract-dev
 
 # Text-to-speech modules:
-1. pip install pyttsx3 (May have to install Espeak on PI)
-   sudo apt install espeak
-2. pip install playsound==1.2.2 (not worked on PI)	
+1. sudo apt install espeak
+   pip install pyttsx3
+2. pip install pygame
 
 # Work:
 1. Đan + Lương + Hải: Text detection
