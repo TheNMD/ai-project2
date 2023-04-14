@@ -1,22 +1,18 @@
-# Raspberry PI modules:
-1. pip install pygame
-2. pip install RPi.GPIO => Error can't install on Windows => https://raspberrypi.stackexchange.com/questions/34119/gpio-library-on-windows-while-developing
-3. pip install picamera => Error can't install on Windows => https://raspberrypi.stackexchange.com/questions/53146/picamera-python-library-alternatives
-4. pip install google-api-python-client
-5. pip install google-cloud-vision
-6. pip install google-cloud
-7. pip install pytesseract
-8. pip install tensorflow
+# Run the code
+1. cd ai-project2
+2. python3 main.py
 
 # Text detection modules:
-1. pip install pytesseract
-2. pip install opencv-python
-
-Install Tesseract-OCR: https://digi.bib.uni-mannheim.de/tesseract/
+1. Install Tesseract-OCR:
+   Windows: https://digi.bib.uni-mannheim.de/tesseract/
+   Linux: sudo apt install tesseract-ocr
+		  sudo apt install libtesseract-dev
+2. pip install pytesseract
 
 # Text-to-speech modules:
-1. pip install pyttsx3 (May have to install Espeak on Pi)
-2. pip install playsound==1.2.2
+1. sudo apt install espeak
+   pip install pyttsx3
+2. pip install pygame
 
 # Work:
 1. Đan + Lương + Hải: Text detection
