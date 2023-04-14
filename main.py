@@ -45,7 +45,7 @@ def playaudio(audioName):
     # TODO Stop, replay, slowdown, jump ahead features
     playsound('./audio/' + audioName + '.wav')
 
-name = "sample1" # capture()
+name = "sample3" # capture()
 image2text(name)
 text2speech(name, play=False)
 playaudio(name)
