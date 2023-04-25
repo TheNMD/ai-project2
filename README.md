@@ -1,6 +1,7 @@
-# Run the code
-1. cd ai-project2
-2. python3 main.py
+# Connect to Raspberry PI and run
+1. ssh aiproject2@aiproject2 | password = aiproject2
+2. cd ai-project2
+3. python3 main.py
 
 # Raspberry PI modules:
 1. pip install picamera (Pre-installed on Raspberry PI)

@@ -1,8 +1,23 @@
 from PIL import Image
 from pytesseract import pytesseract
-import RPi.GPIO as GPIO
-import time
 import pyttsx3
+import RPi.GPIO as GPIO
+from picamera import PiCamera
+import time
+import os
+
+def take_picture():
+    dir_path = './raw_images'
+    counter = 0
+    for path in os.listdir(dir_path):
+        if os.path.isfile(os.path.join(dir_path, path)):
+            counter += 1
+    camera = PiCamera()
+    camera.start_preview()
+    time.sleep(3)
+    camera.capture(f'./raw_images/sample{counter + 1}.jpg')
+    camera.stop_preview()
+    print("Picture taken!")
 
 def image2text(imageName):
     # TODO How tesseract works, how to train tesseract on custom training data
@@ -11,7 +26,7 @@ def image2text(imageName):
     # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
     # Opening the image and storing it in an image object
-    img = Image.open('./images/' + imageName + '.jpg')
+    img = Image.open('./raw_images/' + imageName + '.jpg')
 
     # Passing the image object to image_to_string() function extract the text from the image
     text = pytesseract.image_to_string(img)
@@ -51,7 +66,13 @@ if __name__ == '__main__':
     # Pin Definitons:
     pwmPin = 18 # Broadcom pin 18 (P1 pin 12)
     # ledPin = 23 # Broadcom pin 23 (P1 pin 16)
-    butPin = 17 # Broadcom pin 17 (P1 pin 11)
+    camPin = 17 # Broadcom pin 17 (P1 pin 11)
+    audioPin_play = 0
+    audioPin_stop = 0
+    audioPin_replay = 0
+    audioPin_skip = 0
+    audioPin_back = 0
+    audioPin_speed = 0
 
     dc = 95 # duty cycle (0-100) for PWM pin
 
@@ -60,7 +81,7 @@ if __name__ == '__main__':
     # GPIO.setup(ledPin, GPIO.OUT) # LED pin set as output
     GPIO.setup(pwmPin, GPIO.OUT) # PWM pin set as output
     pwm = GPIO.PWM(pwmPin, 50)  # Initialize PWM on pwmPin 100Hz frequency
-    GPIO.setup(butPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
+    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
     
     # GPIO.output(ledPin, GPIO.LOW)
     pwm.start(dc)
@@ -68,9 +89,9 @@ if __name__ == '__main__':
     
     try:
         while True:
-            if GPIO.input(butPin): # button is released
-                print("0")
-                time.sleep(1.0)
+            if GPIO.input(camPin): # button is released
+                take_picture
+                time.sleep(3.0)
                 # pwm.ChangeDutyCycle(dc)
                 # GPIO.output(ledPin, GPIO.LOW)
             else: # button is pressed:
@@ -81,9 +102,8 @@ if __name__ == '__main__':
                 # time.sleep(0.075)
                 # GPIO.output(ledPin, GPIO.LOW)
                 # time.sleep(0.075)
-    # If CTRL+C is pressed, exit cleanly:
+    # If CTRL+Z is pressed, exit cleanly:
     except KeyboardInterrupt:
-        print("-1") 
         pwm.stop() # stop PWM
         GPIO.cleanup() # cleanup all GPIO
     
