@@ -2,11 +2,15 @@
 1. cd ai-project2
 2. python3 main.py
 
+# Raspberry PI modules:
+1. pip install picamera (Pre-installed on Raspberry PI)
+2. pip install RPi.GPIO (Pre-installed on Raspberry PI)
+
 # Text detection modules:
 1. Install Tesseract-OCR:
    Windows: https://digi.bib.uni-mannheim.de/tesseract/
    Linux: sudo apt install tesseract-ocr
-		  sudo apt install libtesseract-dev
+		    sudo apt install libtesseract-dev
 2. pip install pytesseract
 
 # Text-to-speech modules:

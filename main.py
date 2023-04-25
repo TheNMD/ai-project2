@@ -1,7 +1,6 @@
 from PIL import Image
 from pytesseract import pytesseract
 from playsound import playsound
-
 import pyttsx3
 
 def image2text(imageName):
@@ -45,7 +44,10 @@ def playaudio(audioName):
     # TODO Play, Stop, Playback, ... features
     playsound('./audio/' + audioName + '.wav')
 
-name = "sample1"
-image2text(name)
-text2speech(name, play=False)
-#playaudio(name)
+def button(): pass
+
+if __name__ == '__main__':
+    name = "sample1"
+    image2text(name)
+    text2speech(name, play=False)
+    #playaudio(name)
