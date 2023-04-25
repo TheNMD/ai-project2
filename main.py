@@ -18,7 +18,7 @@ def take_picture():
     camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     camera.stop_preview()
     camera.close()
-    print("picture taken")
+    print(f"Picture taken: sample{counter + 1}")
 
 def image2text(imageName):
     # TODO How tesseract works, how to train tesseract on custom training data
