@@ -85,7 +85,7 @@ if __name__ == '__main__':
     
     # GPIO.output(ledPin, GPIO.LOW)
     pwm.start(dc)
-    print("Press CTRL+C to exit")
+    print("Press CTRL+Z to exit")
     
     try:
         while True:
