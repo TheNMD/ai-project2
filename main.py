@@ -86,7 +86,7 @@ if __name__ == '__main__':
     
     # GPIO.output(ledPin, GPIO.LOW)
     pwm.start(dc)
-    print("Press CTRL+C to exit")
+    print("Smart Reader begins. Press CTRL+C to exit")
     
     try:
         while True:
@@ -103,7 +103,7 @@ if __name__ == '__main__':
                 # time.sleep(0.075)
                 # GPIO.output(ledPin, GPIO.LOW)
                 # time.sleep(0.075)
-    # If CTRL+Z is pressed, exit cleanly:
+    # If CTRL + C is pressed, exit cleanly:
     except KeyboardInterrupt:
         pwm.stop() # stop PWM
         GPIO.cleanup() # cleanup all GPIO
