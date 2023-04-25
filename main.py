@@ -18,6 +18,7 @@ def take_picture():
     camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     camera.stop_preview()
     camera.close()
+    print("picture taken")
 
 def image2text(imageName):
     # TODO How tesseract works, how to train tesseract on custom training data
@@ -90,7 +91,7 @@ if __name__ == '__main__':
     try:
         while True:
             if GPIO.input(camPin): # button is released
-                take_picture
+                take_picture()
                 time.sleep(3.0)
                 # pwm.ChangeDutyCycle(dc)
                 # GPIO.output(ledPin, GPIO.LOW)
