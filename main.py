@@ -12,13 +12,12 @@ def take_picture():
     for path in os.listdir(dir_path):
         if os.path.isfile(os.path.join(dir_path, path)):
             counter += 1
-    print(123)
     camera = PiCamera()
     camera.start_preview()
     time.sleep(3)
     camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     camera.stop_preview()
-    print("Picture taken!")
+    camera.close()
 
 def image2text(imageName):
     # TODO How tesseract works, how to train tesseract on custom training data
@@ -86,12 +85,12 @@ if __name__ == '__main__':
     
     # GPIO.output(ledPin, GPIO.LOW)
     pwm.start(dc)
-    print("Press CTRL+Z to exit")
+    print("Press CTRL+C to exit")
     
     try:
         while True:
             if GPIO.input(camPin): # button is released
-                take_picture()
+                take_picture
                 time.sleep(3.0)
                 # pwm.ChangeDutyCycle(dc)
                 # GPIO.output(ledPin, GPIO.LOW)
@@ -103,7 +102,7 @@ if __name__ == '__main__':
                 # time.sleep(0.075)
                 # GPIO.output(ledPin, GPIO.LOW)
                 # time.sleep(0.075)
-    # If CTRL+C is pressed, exit cleanly:
+    # If CTRL+Z is pressed, exit cleanly:
     except KeyboardInterrupt:
         pwm.stop() # stop PWM
         GPIO.cleanup() # cleanup all GPIO
