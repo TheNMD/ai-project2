@@ -1,6 +1,7 @@
 from PIL import Image
 from pytesseract import pytesseract
-from playsound import playsound
+import RPi.GPIO as GPIO
+import time
 import pyttsx3
 
 def image2text(imageName):
@@ -42,12 +43,42 @@ def text2speech(textName, play):
 
 def playaudio(audioName):
     # TODO Play, Stop, Playback, ... features
-    playsound('./audio/' + audioName + '.wav')
+    pass
 
 def button(): pass
 
 if __name__ == '__main__':
-    name = "sample1"
-    image2text(name)
-    text2speech(name, play=False)
-    #playaudio(name)
+    # Pin Definitons:
+    pwmPin = 18 # Broadcom pin 18 (P1 pin 12)
+    ledPin = 23 # Broadcom pin 23 (P1 pin 16)
+    butPin = 17 # Broadcom pin 17 (P1 pin 11)
+
+    dc = 95 # duty cycle (0-100) for PWM pin
+
+    # Pin Setup:
+    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    GPIO.setup(ledPin, GPIO.OUT) # LED pin set as output
+    GPIO.setup(pwmPin, GPIO.OUT) # PWM pin set as output
+    pwm = GPIO.PWM(pwmPin, 50)  # Initialize PWM on pwmPin 100Hz frequency
+    GPIO.setup(butPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
+    GPIO.output(ledPin, GPIO.LOW)
+    pwm.start(dc)
+    print("Here we go! Press CTRL+C to exit")
+    try:
+        while True:
+            if GPIO.input(butPin): # button is released
+                pwm.ChangeDutyCycle(dc)
+                GPIO.output(ledPin, GPIO.LOW)
+            else: # button is pressed:
+                pwm.ChangeDutyCycle(100-dc)
+                GPIO.output(ledPin, GPIO.HIGH)
+                time.sleep(0.075)
+                GPIO.output(ledPin, GPIO.LOW)
+                time.sleep(0.075)
+    except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
+        pwm.stop() # stop PWM
+        GPIO.cleanup() # cleanup all GPIO
+    
+    # name = "sample1"
+    # image2text(name)
+    # text2speech(name, play=False)
