@@ -97,7 +97,7 @@ if __name__ == '__main__':
                 # GPIO.output(ledPin, GPIO.LOW)
             else: # button is pressed:
                 print("1")
-                time.sleep(1.0)
+                time.sleep (1.0)
                 # pwm.ChangeDutyCycle(100-dc)
                 # GPIO.output(ledPin, GPIO.HIGH)
                 # time.sleep(0.075)
