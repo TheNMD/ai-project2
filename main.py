@@ -48,7 +48,7 @@ def text2speech(textName, play):
 
     # Setting voice sound and voice rate
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[1].id) # voices[0]
+    engine.setProperty("voice", voices[0].id) # voices[0]
     engine.setProperty("rate", 175) # default 200
 
     # Saving the audio in a wav format
