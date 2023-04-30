@@ -1,5 +1,5 @@
 Button 1 (breadboard 25)
-GPIO 2 pin 3
+GPIO 22 pin 15
 Ground pin 6
 Button 2 (breadboard 19)
 GPIO 17 pin 11

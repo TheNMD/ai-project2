@@ -65,7 +65,7 @@ def button(): pass
 
 if __name__ == '__main__':
     # Pin Definitons:
-    stopPin = 2
+    stopPin = 22
     camPin = 17
     audioPin_play = 23
     audioPin_stop = 24
