@@ -74,6 +74,16 @@ if __name__ == '__main__':
     # audioPin_back = 0
     # audioPin_speed = 0
 
+    # dc = 95 # duty cycle (0-100) for PWM pin
+
+    # Pin Setup:
+    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    # GPIO.setup(pwmPin, GPIO.OUT) # PWM pin set as output
+    # pwm = GPIO.PWM(pwmPin, 50)  # Initialize PWM on pwmPin 100Hz frequency
+    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
+    
+    # pwm.start(dc)
+
     # Pin Setup - Broadcom pin-numbering scheme:
     GPIO.setmode(GPIO.BCM)
     
