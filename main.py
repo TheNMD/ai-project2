@@ -1,8 +1,10 @@
 from PIL import Image
 from pytesseract import pytesseract
+import cv2
+import numpy as np
 import pyttsx3
-import RPi.GPIO as GPIO
-from picamera import PiCamera
+# import RPi.GPIO as GPIO
+# from picamera import PiCamera
 import time
 import os
 
@@ -23,9 +25,11 @@ def take_picture():
 
 def image2text(imageName):
     # TODO How tesseract works, image preprocessing
+    # Precprocessing:
+    def get_grayscale(image): pass
     
     # Comment the line below if run on Raspberry PI
-    # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
+    pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
     # Opening the image and storing it in an image object
     img = Image.open('./raw_images/' + imageName + '.jpg')
@@ -67,36 +71,38 @@ def playaudio(audioName):
 def button(): pass
 
 if __name__ == '__main__':
-    # Pin Definitons:
-    stopPin = 22
-    camPin = 17
-    audioPin_play = 23
-    randomPin1 = 24
-    randomPin2 = 16
-    # audioPin_skip = 0
-    # audioPin_back = 0
-    # audioPin_speed = 0
+    # # Pin Definitons:
+    # stopPin = 22
+    # camPin = 17
+    # audioPin_play = 23
+    # randomPin1 = 24
+    # randomPin2 = 16
+    # # audioPin_skip = 0
+    # # audioPin_back = 0
+    # # audioPin_speed = 0
 
-    # Pin Setup:
-    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    # # Pin Setup:
+    # GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
     
-    GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    print("Smart Reader begins.\n")
-    print("Press button 0 to stop.\n",
-          "Press button 1 to take picture.\n",
-          "Press button 2 to play or stop audio.\n")
-    while True:
-        try:
-            if GPIO.input(stopPin) == False:
-                GPIO.cleanup()
-                print("Smart Reader has finished.\n")
-                break
-            if GPIO.input(camPin) == False:
-                take_picture()
-                print("Picture taken.\n")
-        except Exception as e:
-            # print(e)
-            continue
-
+    # print("Smart Reader begins.\n")
+    # print("Press button 0 to stop.\n",
+    #       "Press button 1 to take picture.\n",
+    #       "Press button 2 to play or stop audio.\n")
+    # while True:
+    #     try:
+    #         if GPIO.input(stopPin) == False:
+    #             GPIO.cleanup()
+    #             print("Smart Reader has finished.\n")
+    #             break
+    #         if GPIO.input(camPin) == False:
+    #             take_picture()
+    #             print("Picture taken.\n")
+    #     except Exception as e:
+    #         print(e)
+    #         continue
+    
+    
+    image2text("sample1")
