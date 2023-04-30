@@ -58,7 +58,7 @@ def text2speech(textName, play):
     if play:
         playaudio(textName)
 
-    engine.runAndWait()
+    # engine.runAndWait()
 
 def playaudio(audioName):
     # TODO Play, Stop, Playback, ... features
