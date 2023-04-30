@@ -1,0 +1,15 @@
+Button 1 (breadboard 25)
+GPIO 2 pin 3
+Ground pin 6
+Button 2 (breadboard 19)
+GPIO 17 pin 11
+Ground pin 9
+Button 3 (breadboard 13)
+GPIO 23 pin 16
+Ground pin 14
+Button 4 (breadboard 7)
+GPIO 24 pin 18
+Ground pin 20
+Button 5 (breadboard 2)
+GPIO 16 pin 36
+Ground pin 34

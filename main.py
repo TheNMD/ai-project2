@@ -65,49 +65,25 @@ def button(): pass
 
 if __name__ == '__main__':
     # Pin Definitons:
-    pwmPin = 18 # Broadcom pin 18 (P1 pin 12)
-    # ledPin = 23 # Broadcom pin 23 (P1 pin 16)
-    camPin = 17 # Broadcom pin 17 (P1 pin 11)
-    audioPin_play = 0
-    audioPin_stop = 0
-    audioPin_replay = 0
-    audioPin_skip = 0
-    audioPin_back = 0
-    audioPin_speed = 0
+    stopPin = 2
+    camPin = 17
+    audioPin_play = 23
+    audioPin_stop = 24
+    audioPin_replay = 16
+    # audioPin_skip = 0
+    # audioPin_back = 0
+    # audioPin_speed = 0
 
-    dc = 95 # duty cycle (0-100) for PWM pin
+    # Pin Setup - Broadcom pin-numbering scheme:
+    GPIO.setmode(GPIO.BCM)
+    
+    print("Smart Reader begins.")
+    while True:
+        if GPIO.input(stopPin) == False:
+            GPIO.cleanup()
+            print("Smart Reader has finished.")
+            break
+        if GPIO.input(camPin) == False:
+            take_picture()
+            time.sleep(1.0)
 
-    # Pin Setup:
-    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
-    # GPIO.setup(ledPin, GPIO.OUT) # LED pin set as output
-    GPIO.setup(pwmPin, GPIO.OUT) # PWM pin set as output
-    pwm = GPIO.PWM(pwmPin, 50)  # Initialize PWM on pwmPin 100Hz frequency
-    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
-    
-    # GPIO.output(ledPin, GPIO.LOW)
-    pwm.start(dc)
-    print("Smart Reader begins. Press CTRL+C to exit")
-    
-    try:
-        while True:
-            if GPIO.input(camPin): # button is released
-                take_picture()
-                time.sleep(3.0)
-                # pwm.ChangeDutyCycle(dc)
-                # GPIO.output(ledPin, GPIO.LOW)
-            else: # button is pressed:
-                print("1")
-                time.sleep (1.0)
-                # pwm.ChangeDutyCycle(100-dc)
-                # GPIO.output(ledPin, GPIO.HIGH)
-                # time.sleep(0.075)
-                # GPIO.output(ledPin, GPIO.LOW)
-                # time.sleep(0.075)
-    # If CTRL + C is pressed, exit cleanly:
-    except KeyboardInterrupt:
-        pwm.stop() # stop PWM
-        GPIO.cleanup() # cleanup all GPIO
-    
-    # name = "sample1"
-    # image2text(name)
-    # text2speech(name, play=False)
