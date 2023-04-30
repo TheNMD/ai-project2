@@ -58,7 +58,7 @@ def text2speech(textName, play):
     if play:
         playaudio(textName)
 
-    # engine.runAndWait()
+    engine.runAndWait()
 
 def playaudio(audioName):
     # TODO Play, Stop, Playback, ... features
@@ -88,11 +88,15 @@ if __name__ == '__main__':
           "Press button 1 to take picture.\n",
           "Press button 2 to play or stop audio.\n")
     while True:
-        if GPIO.input(stopPin) == False:
-            GPIO.cleanup()
-            print("Smart Reader has finished.\n")
-            break
-        if GPIO.input(camPin) == False:
-            take_picture()
-            print("Picture taken.\n")
+        try:
+            if GPIO.input(stopPin) == False:
+                GPIO.cleanup()
+                print("Smart Reader has finished.\n")
+                break
+            if GPIO.input(camPin) == False:
+                take_picture()
+                print("Picture taken.\n")
+        except Exception as e:
+            print(type(e))
+            continue
 
