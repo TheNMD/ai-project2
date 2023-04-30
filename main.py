@@ -24,7 +24,6 @@ def take_picture():
     image2text(f"sample{1}")
 
 def image2text(imageName):
-    # TODO How tesseract works, image preprocessing
     # Precprocessing:
     def get_grayscale(image): pass
     
@@ -44,7 +43,7 @@ def image2text(imageName):
     text2speech(imageName, play=False)
 
 def text2speech(textName, play):
-    engine = pyttsx3.init("espeak")
+    engine = pyttsx3.init()
     
     # The text that you want to convert to audio
     with open('./texts/' + textName + '.txt', "r+") as file:
@@ -52,7 +51,7 @@ def text2speech(textName, play):
 
     # Setting voice sound and voice rate
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[11].id)
+    engine.setProperty("voice", voices[0].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150) # default 200
 
     # Saving the audio in a wav format
@@ -65,7 +64,7 @@ def text2speech(textName, play):
     engine.runAndWait()
 
 def playaudio(audioName):
-    # TODO Play, Stop, Playback, ... features
+    # TODO Play, Stop, Replay
     pass
 
 def button(): pass
