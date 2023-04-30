@@ -18,10 +18,11 @@ def take_picture():
     camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     camera.stop_preview()
     camera.close()
-    print(f"Picture taken: sample{counter + 1}")
+    
+    image2text(f"sample{1}")
 
 def image2text(imageName):
-    # TODO How tesseract works, how to train tesseract on custom training data
+    # TODO How tesseract works, image preprocessing
     
     # Comment the line below if run on Raspberry PI
     # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
@@ -35,6 +36,8 @@ def image2text(imageName):
     # Saving the extracted text
     with open('./texts/' + imageName + '.txt', "w+") as file:
         file.write(text)
+        
+    text2speech(imageName)
 
 def text2speech(textName, play):
     engine = pyttsx3.init()
@@ -91,4 +94,5 @@ if __name__ == '__main__':
             break
         if GPIO.input(camPin) == False:
             take_picture()
+            print("Picture taken.\n")
 
