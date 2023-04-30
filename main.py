@@ -80,14 +80,14 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    print("Smart Reader begins.")
+    print("Smart Reader begins.\n")
     print("Press button 0 to stop.\n",
           "Press button 1 to take picture.\n",
           "Press button 2 to play or stop audio.\n")
     while True:
         if GPIO.input(stopPin) == False:
             GPIO.cleanup()
-            print("Smart Reader has finished.")
+            print("Smart Reader has finished.\n")
             break
         if GPIO.input(camPin) == False:
             take_picture()
