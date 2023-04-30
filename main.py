@@ -37,7 +37,7 @@ def image2text(imageName):
     with open('./texts/' + imageName + '.txt', "w+") as file:
         file.write(text)
         
-    text2speech(imageName)
+    text2speech(imageName, play=False)
 
 def text2speech(textName, play):
     engine = pyttsx3.init()
