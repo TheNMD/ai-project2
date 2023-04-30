@@ -68,8 +68,8 @@ if __name__ == '__main__':
     stopPin = 22
     camPin = 17
     audioPin_play = 23
-    audioPin_stop = 24
-    audioPin_replay = 16
+    randomPin1 = 24
+    randomPin2 = 16
     # audioPin_skip = 0
     # audioPin_back = 0
     # audioPin_speed = 0
@@ -81,6 +81,9 @@ if __name__ == '__main__':
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print("Smart Reader begins.")
+    print("Press button 0 to stop.\n",
+          "Press button 1 to take picture.\n",
+          "Press button 2 to play or stop audio.\n")
     while True:
         if GPIO.input(stopPin) == False:
             GPIO.cleanup()
