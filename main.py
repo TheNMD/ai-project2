@@ -40,7 +40,7 @@ def image2text(imageName):
     text2speech(imageName, play=False)
 
 def text2speech(textName, play):
-    engine = pyttsx3.init()
+    engine = pyttsx3.init("espeak")
     
     # The text that you want to convert to audio
     with open('./texts/' + textName + '.txt', "r+") as file:
