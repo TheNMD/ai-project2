@@ -80,7 +80,9 @@ if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
     # GPIO.setup(pwmPin, GPIO.OUT) # PWM pin set as output
     # pwm = GPIO.PWM(pwmPin, 50)  # Initialize PWM on pwmPin 100Hz frequency
-    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button pin set as input w/ pull-up
+    
+    GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     # pwm.start(dc)
 
