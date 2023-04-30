@@ -97,6 +97,6 @@ if __name__ == '__main__':
                 take_picture()
                 print("Picture taken.\n")
         except Exception as e:
-            print(type(e))
+            print(e)
             continue
 
