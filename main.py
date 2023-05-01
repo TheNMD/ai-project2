@@ -112,7 +112,7 @@ def image2text(imageName):
     
     if existing == False:
         # Comment the line below if run on Raspberry PI
-        pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
+        # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
         text = pytesseract.image_to_string(processed_img)
 
@@ -133,7 +133,7 @@ def text2speech(textName, play):
 
     # Setting voice sound and voice rate
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[0].id) # voices[0] if run on Windows, voices[11] if run on PI
+    engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150)
 
     # Saving the audio in a wav format
@@ -152,24 +152,24 @@ def playaudio(audioName):
 def button(): pass
 
 if __name__ == '__main__':
-    # # Pin Definitons:
-    # stopPin = 22
-    # camPin = 17
-    # audioPin_play = 23
-    # randomPin1 = 24
-    # randomPin2 = 16
-    # # audioPin_skip = 0
-    # # audioPin_back = 0
-    # # audioPin_speed = 0
+    # Pin Definitons:
+    stopPin = 22
+    camPin = 17
+    audioPin_play = 23
+    randomPin1 = 24
+    randomPin2 = 16
+    # audioPin_skip = 0
+    # audioPin_back = 0
+    # audioPin_speed = 0
 
-    # # Pin Setup:
-    # GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    # Pin Setup:
+    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
     
-    # GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print("Smart Reader begins.\n")
-    print("Press button 0 to stop.\n",
+    print("Press button 0 to stop. Hold button 0 to restart PI.\n",
           "Press button 1 to take picture.\n",
           "Press button 2 to play or stop audio.\n")
     while True:
