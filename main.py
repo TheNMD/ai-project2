@@ -86,7 +86,7 @@ def image2text(imageName):
     # TODO Read about grayscale and threshold
     processed_img = get_grayscale(raw_img)
     processed_img = thresholding(processed_img)        # Image dimensions are 2 - Height, Width
-    cv2.imwrite('./processed_images/new.jpg', raw_img) # Write to an image so that the image dimensions are 3 - Height, Width, RGB
+    cv2.imwrite('./processed_images/new.jpg', processed_img) # Write to an image so that the image dimensions are 3 - Height, Width, RGB
     processed_img = cv2.imread('./processed_images/new.jpg')
     
     existing = False
@@ -168,21 +168,30 @@ if __name__ == '__main__':
     # GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     # GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    # print("Smart Reader begins.\n")
-    # print("Press button 0 to stop.\n",
-    #       "Press button 1 to take picture.\n",
-    #       "Press button 2 to play or stop audio.\n")
-    # while True:
-    #     try:
-    #         if GPIO.input(stopPin) == False:
-    #             GPIO.cleanup()
-    #             print("Smart Reader has finished.\n")
-    #             break
-    #         if GPIO.input(camPin) == False:
-    #             take_picture()
-    #             print("Picture taken.\n")
-    #     except Exception as e:
-    #         print(e)
-    #         continue
+    print("Smart Reader begins.\n")
+    print("Press button 0 to stop.\n",
+          "Press button 1 to take picture.\n",
+          "Press button 2 to play or stop audio.\n")
+    while True:
+        try:
+            if GPIO.input(stopPin) == False:
+                start_time = time.time()
+                while GPIO.input(stopPin) == False:
+                    pass
+                buttonTime = time.time() - start_time
+                if buttonTime < 2:
+                    GPIO.cleanup()
+                    print("Smart Reader has finished.\n")
+                    break
+                else:
+                    GPIO.cleanup()
+                    print("Smart Reader has finished.\n")
+                    os.system("reboot")
+            if GPIO.input(camPin) == False:
+                take_picture()
+                print("Picture taken.\n")
+        except Exception as e:
+            print(e)
+            continue
     
     image2text("sample1")
