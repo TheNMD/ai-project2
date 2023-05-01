@@ -120,11 +120,11 @@ def image2text(imageName):
         with open('./texts/' + imageName + '.txt', "w+") as file:
             file.write(text)
         
-        text2speech(imageName, play=False)
+        text2speech(imageName)
     else:
         print(filename)
 
-def text2speech(textName, play):
+def text2speech(textName):
     engine = pyttsx3.init()
     
     # The text that you want to convert to audio
@@ -138,10 +138,6 @@ def text2speech(textName, play):
 
     # Saving the audio in a wav format
     engine.save_to_file(text, './audio/' + textName + '.wav')
-
-    # Playing the audio
-    if play:
-        playaudio(textName)
 
     engine.runAndWait()
 
@@ -158,8 +154,6 @@ if __name__ == '__main__':
     audioPin_play = 23
     randomPin1 = 24
     randomPin2 = 16
-    # audioPin_skip = 0
-    # audioPin_back = 0
     # audioPin_speed = 0
 
     # Pin Setup:
@@ -175,23 +169,19 @@ if __name__ == '__main__':
     while True:
         try:
             if GPIO.input(stopPin) == False:
-                start_time = time.time()
-                while GPIO.input(stopPin) == False:
-                    pass
-                buttonTime = time.time() - start_time
-                if buttonTime < 2:
-                    GPIO.cleanup()
-                    print("Smart Reader has finished.\n")
-                    break
-                else:
+                time.sleep(3)
+                # Check if button is still being hold after 3 seconds
+                if GPIO.input(stopPin) == False:
                     GPIO.cleanup()
                     print("Smart Reader has finished.\n")
                     os.system("reboot")
+                else:
+                    GPIO.cleanup()
+                    print("Smart Reader has finished.\n")
+                    break
             if GPIO.input(camPin) == False:
                 take_picture()
                 print("Picture taken.\n")
         except Exception as e:
             print(e)
             continue
-    
-    image2text("sample1")
