@@ -1,6 +1,8 @@
 from PIL import Image
 from pytesseract import pytesseract
 from playsound import playsound
+from threading import Thread
+import time
 
 import pyttsx3
 
@@ -43,9 +45,48 @@ def text2speech(textName, play):
 
 def playaudio(audioName):
     # TODO Stop, replay, slowdown, jump ahead features
-    playsound('./audio/' + audioName + '.wav')
+    playsound('./audio/' + audioName + '.wav', block = False)
+    input("Press Enter to continue")
 
-name = "sample1" # capture()
-image2text(name)
-text2speech(name, play=False)
-playaudio(name)
+
+class SoundPlayer:
+    def __init__(self, sound_file):
+        self.sound_file = './audio/' + sound_file + '.wav'
+        self.paused = False
+        self.thread = Thread(target=self._play_sound)
+
+    def play(self):
+        self.thread.start()
+
+    def pause(self):
+        self.paused = True
+
+    def resume(self):
+        self.paused = False
+
+    def _play_sound(self):
+        playsound(self.sound_file, block=False)
+        while True:
+            if self.paused:
+                time.sleep(0.1)
+            else:
+                playsound(self.sound_file, block=False)
+
+def play_sound_with_pause(sound_file):
+    player = SoundPlayer(sound_file)
+    player.play()
+    while True:
+        input_text = input("Press Enter to pause/resume playback, or 'q' to quit... ")
+        if input_text == "q":
+            player.pause()
+            break
+        elif player.paused:
+            player.resume()
+        else:
+            player.pause()
+
+name = "sample2" # capture()
+# image2text(name)
+# text2speech(name, play=False)
+# playaudio(name)
+play_sound_with_pause(name)
