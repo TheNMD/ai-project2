@@ -1,7 +1,7 @@
 import time
 import os
-# import RPi.GPIO as GPIO
-# from picamera import PiCamera
+import RPi.GPIO as GPIO
+from picamera import PiCamera
 import pygame
 from pygame import mixer, init
 import cv2
@@ -142,16 +142,13 @@ def text2speech(textName):
     engine.save_to_file(text, './audio/' + textName + '.wav')
 
     engine.runAndWait()
-
-# def playaudio(audioName):
-#     # TODO Play, Stop, Replay
-#     pass
 class SoundPlayer:
     def __init__(self, sound_file):
         init()   
         self.sound_file = './audio/' + sound_file + '.wav'
 
     def _play_sound(self):
+        
         mixer.init()
         mixer.music.load(self.sound_file)
         mixer.music.set_volume(0.5)
@@ -176,18 +173,19 @@ class SoundPlayer:
                         return
             pygame.time.wait(10)        
 
-# sample2 = SoundPlayer('sample2')
-# sample2._play_sound()
-
-def button(): pass
-
 if __name__ == '__main__':
+    init()
+    
+    
+    size = width, height = 320, 240
+    screen = pygame.display.set_mode(size)
+    
     # Pin Definitons:
     stopPin = 22
     camPin = 17
     audioPin_play = 23
-    randomPin1 = 24
-    randomPin2 = 16
+    audioPin_pause = 24
+    audioPin_stop = 16
     # audioPin_speed = 0
 
     # Pin Setup:
@@ -216,6 +214,18 @@ if __name__ == '__main__':
             if GPIO.input(camPin) == False:
                 take_picture()
                 print("Picture taken.\n")
+            if GPIO.input(audioPin_play) == False:
+                mixer.init()
+                mixer.music.load('./audio/' + "sample1" + '.wav')
+                mixer.music.set_volume(0.5)
+                mixer.music.play(-1)
+                while True:
+                    if GPIO.input(audioPin_pause) == False:
+                        mixer.music.pause()
+                    elif GPIO.input(audioPin_play) == False:
+                        mixer.music.unpause()
+                    elif GPIO.input(audioPin_stop) == False:
+                        mixer.music.stop()
         except Exception as e:
             print(e)
             continue
