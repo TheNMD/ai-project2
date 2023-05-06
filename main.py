@@ -219,6 +219,9 @@ if __name__ == '__main__':
                 mixer.music.load('./audio/' + "sample1" + '.wav')
                 mixer.music.set_volume(0.5)
                 mixer.music.play(-1)
+                
+                size = width, height = 320, 240
+                screen = pygame.display.set_mode(size)
                 while True:
                     if GPIO.input(audioPin_pause) == False:
                         mixer.music.pause()
