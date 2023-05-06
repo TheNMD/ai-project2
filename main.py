@@ -2,6 +2,8 @@ import time
 import os
 # import RPi.GPIO as GPIO
 # from picamera import PiCamera
+import pygame
+from pygame import mixer, init
 import cv2
 import numpy as np
 from pytesseract import pytesseract
@@ -141,9 +143,41 @@ def text2speech(textName):
 
     engine.runAndWait()
 
-def playaudio(audioName):
-    # TODO Play, Stop, Replay
-    pass
+# def playaudio(audioName):
+#     # TODO Play, Stop, Replay
+#     pass
+class SoundPlayer:
+    def __init__(self, sound_file):
+        init()   
+        self.sound_file = './audio/' + sound_file + '.wav'
+
+    def _play_sound(self):
+        mixer.init()
+        mixer.music.load(self.sound_file)
+        mixer.music.set_volume(0.5)
+        mixer.music.play(-1)
+
+        size = width, height = 320, 240
+        screen = pygame.display.set_mode(size)
+
+        while True:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        mixer.music.pause()
+                    elif event.key == pygame.K_r:
+                        mixer.music.unpause()
+                    elif event.key == pygame.K_e:
+                        mixer.music.stop()
+                        return
+            pygame.time.wait(10)        
+
+# sample2 = SoundPlayer('sample2')
+# sample2._play_sound()
 
 def button(): pass
 
