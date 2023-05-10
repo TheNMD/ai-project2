@@ -18,7 +18,7 @@ def take_picture():
             counter += 1
     camera = PiCamera()
     camera.start_preview()
-    time.sleep(3)
+    time.sleep(10)
     camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     camera.stop_preview()
     camera.close()
