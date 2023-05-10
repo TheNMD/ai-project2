@@ -196,6 +196,7 @@ if __name__ == '__main__':
                 take_picture(GPIO.input(camPin))
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
+                time.sleep(1)
                 if not firstPlay:
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
@@ -213,6 +214,7 @@ if __name__ == '__main__':
                         playing = True
                         print("Audio played.\n")
             if GPIO.input(audioPin_stop) == False:
+                time.sleep(1)
                 if firstPlay:
                     pygame.mixer.music.stop()
                     playing = False
