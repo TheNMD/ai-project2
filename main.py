@@ -9,7 +9,7 @@ import numpy as np
 from pytesseract import pytesseract
 import pyttsx3
 
-def take_picture():
+def take_picture(pin):
     dir_path = './raw_images'
     counter = 0
     for path in os.listdir(dir_path):
@@ -17,12 +17,12 @@ def take_picture():
             counter += 1
     camera = PiCamera()
     camera.start_preview()
-    time.sleep(3)
-    camera.capture(f'./raw_images/sample{counter + 1}.jpg')
-    camera.stop_preview()
-    camera.close()
+    # time.sleep(10)
+    # camera.capture(f'./raw_images/sample{counter + 1}.jpg')
+    # camera.stop_preview()
+    # camera.close()
     
-    image2text(f"sample{counter + 1}")
+    # image2text(f"sample{counter + 1}")
 
 def image2text(imageName):
     # Precprocessing:
@@ -193,6 +193,9 @@ if __name__ == '__main__':
     
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_pause, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print("Smart Reader begins.\n")
     print("Press button 0 to stop. Hold button 0 to restart PI.\n",
@@ -212,7 +215,7 @@ if __name__ == '__main__':
                     print("Smart Reader has finished.\n")
                     break
             if GPIO.input(camPin) == False:
-                take_picture()
+                take_picture(GPIO.input(camPin))
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
                 mixer.init()
@@ -229,6 +232,7 @@ if __name__ == '__main__':
                         mixer.music.unpause()
                     elif GPIO.input(audioPin_stop) == False:
                         mixer.music.stop()
+                        break
         except Exception as e:
             print(e)
             continue
