@@ -17,8 +17,8 @@
 
 # Text-to-speech modules:
 1. sudo apt install espeak
-   pip install pyttsx3
-2. pip install pygame
+2.   pip install pyttsx3
+3. pip install pygame
 
 # Work:
 1. Đan + Lương + Hải: Text detection
