@@ -3,7 +3,7 @@ import imutils
 from skimage.filters import threshold_local
 from transform import perspective_transform
 
-imageName = "sample2"
+imageName = "sample4"
 # Passing the image path
 
 original_img = cv2.imread(f'./{imageName}.jpg')

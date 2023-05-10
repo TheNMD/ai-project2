@@ -14,10 +14,12 @@
 		    sudo apt install libtesseract-dev
 2. pip install pytesseract
 3. pip install Pillow==9.2.0
+4. pip install imutils
+5. pip install scikit-image
 
 # Text-to-speech modules:
 1. sudo apt install espeak
-2.   pip install pyttsx3
+2. pip install pyttsx3
 3. pip install pygame
 
 # Work:
