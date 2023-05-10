@@ -149,6 +149,8 @@ if __name__ == '__main__':
     # Pygame init
     pygame.init()
     playing = False
+    size = width, height = 320, 240
+    screen = pygame.display.set_mode(size)
     
     # Pin Definitons:
     stopPin = 22
@@ -184,8 +186,6 @@ if __name__ == '__main__':
                 take_picture(GPIO.input(camPin))
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
-                size = width, height = 320, 240
-                screen = pygame.display.set_mode(size)
                 pygame.mixer.init()
                 pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
                 pygame.mixer.music.set_volume(0.5)
