@@ -135,8 +135,8 @@ if __name__ == '__main__':
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    print("   Smart Reader begins.\n",
-          "1. Press button 0 to stop. Hold button 0 to restart PI.\n",
+    print("    Smart Reader begins.\n",
+          "1. Press button 0 to stop.\n",
           "2. Press button 1 to take picture.\n",
           "3. Press button 2 to play or pause audio.\n",
           "4. Press button 3 to stop audio.\n")
@@ -144,29 +144,19 @@ if __name__ == '__main__':
     while True:
         try:
             if GPIO.input(stopPin) == False:
-                time.sleep(2)
-                # Check if button is still being hold after 2 seconds
-                if GPIO.input(stopPin) == False:
-                    if playing:
-                        pygame.mixer.music.stop()
-                        playing = False
-                        firstPlay = False
-                    GPIO.cleanup()
-                    print("Smart Reader has finished.\n")
-                    os.system("reboot")
-                else:
-                    if playing:
-                        pygame.mixer.music.stop()
-                        playing = False
-                        firstPlay = False
-                    GPIO.cleanup()
-                    print("Smart Reader has finished.\n")
-                    break
+                time.sleep(0.25)
+                if playing:
+                    pygame.mixer.music.stop()
+                    playing = False
+                    firstPlay = False
+                GPIO.cleanup()
+                print("Smart Reader has finished.\n")
+                break
             if GPIO.input(camPin) == False:
                 take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
-                time.sleep(0.5)
+                time.sleep(0.25)
                 if not firstPlay:
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
@@ -185,7 +175,7 @@ if __name__ == '__main__':
                         playing = True
                         print("Audio played.\n")
             if GPIO.input(audioPin_stop) == False:
-                time.sleep(0.5)
+                time.sleep(0.25)
                 if firstPlay:
                     pygame.mixer.music.stop()
                     playing = False
