@@ -137,7 +137,7 @@ if __name__ == '__main__':
     GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    print("#. Smart Reader begins.\n",
+    print(" #. Smart Reader begins.\n",
           "1. Press button 0 to stop.\n",
           "2. Press button 1 to take picture.\n",
           "3. Press button 2 to play or pause audio.\n",
