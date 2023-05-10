@@ -191,7 +191,6 @@ if __name__ == '__main__':
                 time.sleep(0.5)
                 if firstPlay:
                     pygame.mixer.music.stop()
-                    pygame.mixer.music.unload()
                     playing = False
                     firstPlay = False
                     print("Audio ended.\n")
