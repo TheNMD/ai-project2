@@ -140,8 +140,7 @@ if __name__ == '__main__':
           "1. Press button 1 to stop.\n",
           "2. Press button 2 to take picture.\n",
           "3. Press button 3 to play or pause audio.\n",
-          "4. Press button 4 to replay audio.\n",
-          "5. Press button 5 to stop audio.\n")
+          "4. Press button 4 to stop audio.\n")
     
     while True:
         try:
