@@ -10,7 +10,7 @@ from pytesseract import pytesseract
 import pyttsx3
 import pygame
 
-def take_picture(pin):
+def take_picture():
     dir_path = './raw_images'
     counter = 0
     for path in os.listdir(dir_path):
@@ -155,7 +155,7 @@ if __name__ == '__main__':
                     print("Smart Reader has finished.\n")
                     break
             if GPIO.input(camPin) == False:
-                take_picture(GPIO.input(camPin))
+                take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
                 time.sleep(0.5)
