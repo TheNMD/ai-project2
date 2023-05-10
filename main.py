@@ -1,5 +1,7 @@
 import time
 import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+os.environ["DISPLAY"] = ":0"
 
 import RPi.GPIO as GPIO
 from picamera import PiCamera
@@ -147,7 +149,6 @@ def text2speech(textName):
 
 if __name__ == '__main__':
     # Pygame init
-    os.environ["DISPLAY"] = ":0"
     pygame.init()
     size = width, height = 320, 240
     screen = pygame.display.set_mode(size)
