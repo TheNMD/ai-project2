@@ -18,12 +18,12 @@ def take_picture():
             counter += 1
     camera = PiCamera()
     camera.start_preview()
-    # time.sleep(2)
-    # camera.capture(f'./raw_images/sample{counter + 1}.jpg')
-    # camera.stop_preview()
-    # camera.close()
+    time.sleep(3)
+    camera.capture(f'./raw_images/sample{counter + 1}.jpg')
+    camera.stop_preview()
+    camera.close()
     
-    # return image2text(f"sample{counter + 1}")
+    return image2text(f"sample{counter + 1}")
 
 def image2text(imageName):
     # Preprocessing:
@@ -51,7 +51,7 @@ def image2text(imageName):
     
     # TODO Read about grayscale and threshold
     processed_img = get_grayscale(raw_img)
-    processed_img = thresholding(processed_img) # Image dimensions are 2 - Height, Width
+    # processed_img = thresholding(processed_img) # Image dimensions are 2 - Height, Width
     cv2.imwrite('./processed_images/new.jpg', processed_img) # Write to an image so that the image dimensions are 3 - Height, Width, RGB
     processed_img = cv2.imread('./processed_images/new.jpg')
     
@@ -134,7 +134,7 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print(" #. Smart Reader begins.\n",
@@ -156,6 +156,10 @@ if __name__ == '__main__':
                 print("Smart Reader has finished.\n")
                 break
             if GPIO.input(camPin) == False:
+                time.sleep(0.25)
+                if playing:
+                    print("Stop audio first.\n")
+                    continue
                 filename = take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
