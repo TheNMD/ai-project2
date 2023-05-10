@@ -47,7 +47,7 @@ def image2text(imageName):
         mse = err / float(h * w)
         return mse
     
-    raw_img = cv2.imread('./raw_images/' + imageName + '.jpg')
+    raw_img = cv2.imread(f'./raw_images/{imageName}.jpg')
     
     # TODO Read about grayscale and threshold
     processed_img = get_grayscale(raw_img)
@@ -58,23 +58,23 @@ def image2text(imageName):
     existing = False
     dir_path = './processed_images'
     for path in os.listdir(dir_path):
-        existing_img = cv2.imread('./processed_images/' + str(os.path.basename(path)))
+        existing_img = cv2.imread(f'./processed_images/{os.path.basename(path)}')
         if existing_img.shape == processed_img.shape and str(os.path.basename(path)) != "new.jpg":
             error = mse(existing_img, processed_img)
             if error < 5:
                 os.remove('./processed_images/new.jpg')
-                # os.remove('./raw_images/' + imageName + '.jpg')
+                # os.remove(f'./raw_images/{imageName}.jpg)
                 filename = os.path.basename(path)
                 filename = os.path.splitext(filename)[0]
                 existing = True
                 break
             else:
                 os.remove('./processed_images/new.jpg')
-                cv2.imwrite('./processed_images/' + imageName + '.jpg', processed_img)
+                cv2.imwrite(f'./processed_images/{imageName}.jpg',, processed_img)
                 break
     else:
         os.remove('./processed_images/new.jpg')
-        cv2.imwrite('./processed_images/' + imageName + '.jpg', processed_img)
+        cv2.imwrite(f'./processed_images/{imageName}.jpg', processed_img)
     
     if existing == False:
         # Comment the line below if run on Raspberry PI
@@ -83,7 +83,7 @@ def image2text(imageName):
         text = pytesseract.image_to_string(processed_img)
 
         # Saving the extracted text
-        with open('./texts/' + imageName + '.txt', "w+") as file:
+        with open(f'./texts/{imageName}.txt', "w+") as file:
             file.write(text)
         
         return text2speech(imageName)
@@ -94,7 +94,7 @@ def text2speech(textName):
     engine = pyttsx3.init()
     
     # The text that you want to convert to audio
-    with open('./texts/' + textName + '.txt', "r+") as file:
+    with open(f'./texts/{textName}.txt', "r+") as file:
         text = file.read()
 
     # Setting voice sound and voice rate
@@ -103,7 +103,7 @@ def text2speech(textName):
     engine.setProperty("rate", 150)
 
     # Saving the audio in a wav format
-    engine.save_to_file(text, './audio/' + textName + '.wav')
+    engine.save_to_file(text, f'./audio/{textName}.mp3')
 
     engine.runAndWait()
     
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     # Audio condition
     firstPlay = False
     playing = False
-    filename = "sample1"
+    filename = "sample2"
     
     
     # Pin Definitions:
@@ -138,10 +138,11 @@ if __name__ == '__main__':
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print(" #. Smart Reader begins.\n",
-          "1. Press button 0 to stop.\n",
-          "2. Press button 1 to take picture.\n",
-          "3. Press button 2 to play or pause audio.\n",
-          "4. Press button 3 to stop audio.\n")
+          "1. Press button 1 to stop.\n",
+          "2. Press button 2 to take picture.\n",
+          "3. Press button 3 to play or pause audio.\n",
+          "4. Press button 4 to replay audio.\n",
+          "5. Press button 5 to stop audio.\n")
     
     while True:
         try:
@@ -166,7 +167,7 @@ if __name__ == '__main__':
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + f"{filename}" + '.wav')
                     pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play(-1)
+                    pygame.mixer.music.play()
                     playing = True
                     firstPlay = True
                     print("Audio played.\n")
@@ -183,6 +184,7 @@ if __name__ == '__main__':
                 time.sleep(0.5)
                 if firstPlay:
                     pygame.mixer.music.rewind()
+                    pygame.mixer.music.unpause()
                     playing = True
                     print("Audio replayed.\n")
                 else:
