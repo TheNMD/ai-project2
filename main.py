@@ -144,7 +144,7 @@ if __name__ == '__main__':
     while True:
         try:
             if GPIO.input(stopPin) == False:
-                time.sleep(0.25)
+                time.sleep(0.5)
                 if playing:
                     pygame.mixer.music.stop()
                     playing = False
@@ -156,7 +156,7 @@ if __name__ == '__main__':
                 take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
-                time.sleep(0.25)
+                time.sleep(0.5)
                 if not firstPlay:
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                         playing = True
                         print("Audio played.\n")
             if GPIO.input(audioPin_stop) == False:
-                time.sleep(0.25)
+                time.sleep(0.5)
                 if firstPlay:
                     pygame.mixer.music.stop()
                     playing = False
