@@ -70,7 +70,7 @@ def image2text(imageName):
                 break
             else:
                 os.remove('./processed_images/new.jpg')
-                cv2.imwrite(f'./processed_images/{imageName}.jpg',, processed_img)
+                cv2.imwrite(f'./processed_images/{imageName}.jpg', processed_img)
                 break
     else:
         os.remove('./processed_images/new.jpg')
@@ -102,7 +102,7 @@ def text2speech(textName):
     engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150)
 
-    # Saving the audio in a wav format
+    # Saving the audio in a mp3 format
     engine.save_to_file(text, f'./audio/{textName}.mp3')
 
     engine.runAndWait()
@@ -165,7 +165,7 @@ if __name__ == '__main__':
                         print("No picture chosen.\n")
                         continue
                     pygame.mixer.init()
-                    pygame.mixer.music.load('./audio/' + f"{filename}" + '.wav')
+                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
                     pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play()
                     playing = True
