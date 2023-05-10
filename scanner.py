@@ -3,11 +3,10 @@ import imutils
 from skimage.filters import threshold_local
 from transform import perspective_transform
 
-imageName = "sample8"
+imageName = "sample2"
 # Passing the image path
 
 original_img = cv2.imread(f'./{imageName}.jpg')
-# original_img = cv2.rotate(original_img, cv2.ROTATE_90_CLOCKWISE)
 copy = original_img.copy()
 
 # The resized height in hundreds
