@@ -177,13 +177,13 @@ if __name__ == '__main__':
           "1. Press button 0 to stop. Hold button 0 to restart PI.\n",
           "2. Press button 1 to take picture.\n",
           "3. Press button 2 to play or pause audio.\n",
-          "4. Hold button 2 to stop audio.\n")
+          "4. Press button 3 to stop audio.\n")
     
     while True:
         try:
             if GPIO.input(stopPin) == False:
                 time.sleep(2)
-                # Check if button is still being hold after 3 seconds
+                # Check if button is still being hold after 2 seconds
                 if GPIO.input(stopPin) == False:
                     GPIO.cleanup()
                     print("Smart Reader has finished.\n")
@@ -196,7 +196,7 @@ if __name__ == '__main__':
                 take_picture(GPIO.input(camPin))
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
-                time.sleep(1)
+                time.sleep(0.5)
                 if not firstPlay:
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
@@ -204,6 +204,7 @@ if __name__ == '__main__':
                     pygame.mixer.music.play(-1)
                     playing = True
                     firstPlay = True
+                    print("Audio played.\n")
                 else:
                     if playing:
                         pygame.mixer.music.pause()
@@ -214,7 +215,7 @@ if __name__ == '__main__':
                         playing = True
                         print("Audio played.\n")
             if GPIO.input(audioPin_stop) == False:
-                time.sleep(1)
+                time.sleep(0.5)
                 if firstPlay:
                     pygame.mixer.music.stop()
                     playing = False
