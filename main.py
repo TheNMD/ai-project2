@@ -2,15 +2,12 @@ import time
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 os.environ["DISPLAY"] = ":0"
-
 import RPi.GPIO as GPIO
 from picamera import PiCamera
-
 import cv2
 import numpy as np
 from pytesseract import pytesseract
 import pyttsx3
-
 import pygame
 
 def take_picture(pin):
@@ -21,15 +18,15 @@ def take_picture(pin):
             counter += 1
     camera = PiCamera()
     camera.start_preview()
-    # time.sleep(10)
+    # time.sleep(2)
     # camera.capture(f'./raw_images/sample{counter + 1}.jpg')
     # camera.stop_preview()
     # camera.close()
     
-    # image2text(f"sample{counter + 1}")
+    # return image2text(f"sample{counter + 1}")
 
 def image2text(imageName):
-    # Precprocessing:
+    # Preprocessing:
     # get grayscale image
     def get_grayscale(image):
         return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -38,46 +35,9 @@ def image2text(imageName):
     def remove_noise(image):
         return cv2.medianBlur(image,5)
     
-    #thresholding (aka convert to binary)
+    # Thresholding (convert to binary)
     def thresholding(image):
         return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
-    #dilation
-    def dilate(image):
-        kernel = np.ones((5,5),np.uint8)
-        return cv2.dilate(image, kernel, iterations = 1)
-        
-    #erosion
-    def erode(image):
-        kernel = np.ones((5,5),np.uint8)
-        return cv2.erode(image, kernel, iterations = 1)
-
-    #opening - erosion followed by dilation
-    def opening(image):
-        kernel = np.ones((5,5),np.uint8)
-        return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
-
-    #canny edge detection
-    def canny(image):
-        return cv2.Canny(image, 100, 200)
-
-    #skew correction
-    def deskew(image):
-        coords = np.column_stack(np.where(image > 0))
-        angle = cv2.minAreaRect(coords)[-1]
-        if angle < -45:
-            angle = -(90 + angle)
-        else:
-            angle = -angle
-        (h, w) = image.shape[:2]
-        center = (w // 2, h // 2)
-        M = cv2.getRotationMatrix2D(center, angle, 1.0)
-        rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-        return rotated
-
-    #template matching
-    def match_template(image, template):
-        return cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED) 
     
     # Compare 2 images
     def mse(img1, img2):
@@ -91,7 +51,7 @@ def image2text(imageName):
     
     # TODO Read about grayscale and threshold
     processed_img = get_grayscale(raw_img)
-    processed_img = thresholding(processed_img)        # Image dimensions are 2 - Height, Width
+    processed_img = thresholding(processed_img) # Image dimensions are 2 - Height, Width
     cv2.imwrite('./processed_images/new.jpg', processed_img) # Write to an image so that the image dimensions are 3 - Height, Width, RGB
     processed_img = cv2.imread('./processed_images/new.jpg')
     
@@ -126,9 +86,9 @@ def image2text(imageName):
         with open('./texts/' + imageName + '.txt', "w+") as file:
             file.write(text)
         
-        text2speech(imageName)
+        return text2speech(imageName)
     else:
-        print(filename)
+        return filename
 
 def text2speech(textName):
     engine = pyttsx3.init()
@@ -145,7 +105,9 @@ def text2speech(textName):
     # Saving the audio in a wav format
     engine.save_to_file(text, './audio/' + textName + '.wav')
 
-    engine.runAndWait() 
+    engine.runAndWait()
+    
+    return textName 
 
 if __name__ == '__main__':
     # Pygame init
