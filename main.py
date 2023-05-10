@@ -125,8 +125,8 @@ if __name__ == '__main__':
     stopPin = 22
     camPin = 17
     audioPin_play = 23
-    audioPin_replay = 24
-    audioPin_stop = 16
+    audioPin_stop = 24
+    randomPin = 16
 
     # Pin Setup:
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -134,7 +134,6 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print(" #. Smart Reader begins.\n",
@@ -147,7 +146,7 @@ if __name__ == '__main__':
     while True:
         try:
             if GPIO.input(stopPin) == False:
-                time.sleep(0.5)
+                time.sleep(0.25)
                 if playing:
                     pygame.mixer.music.stop()
                     playing = False
@@ -159,7 +158,7 @@ if __name__ == '__main__':
                 filename = take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
-                time.sleep(0.5)
+                time.sleep(0.25)
                 if not firstPlay:
                     if filename == "":
                         print("No picture chosen.\n")
@@ -179,18 +178,9 @@ if __name__ == '__main__':
                     else:
                         pygame.mixer.music.unpause()
                         playing = True
-                        print("Audio played.\n")
-            if GPIO.input(audioPin_replay) == False:
-                time.sleep(0.5)
-                if firstPlay:
-                    pygame.mixer.music.rewind()
-                    pygame.mixer.music.unpause()
-                    playing = True
-                    print("Audio replayed.\n")
-                else:
-                   print("No audio is playing.\n")         
+                        print("Audio played.\n")     
             if GPIO.input(audioPin_stop) == False:
-                time.sleep(0.5)
+                time.sleep(0.25)
                 if firstPlay:
                     pygame.mixer.music.stop()
                     playing = False
