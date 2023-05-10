@@ -125,8 +125,8 @@ if __name__ == '__main__':
     stopPin = 22
     camPin = 17
     audioPin_play = 23
-    audioPin_stop = 24
-    randomPin = 16
+    audioPin_replay = 24
+    audioPin_stop = 16
 
     # Pin Setup:
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -134,13 +134,15 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print(" #. Smart Reader begins.\n",
           "1. Press button 1 to stop.\n",
           "2. Press button 2 to take picture.\n",
           "3. Press button 3 to play or pause audio.\n",
-          "4. Press button 4 to stop audio.\n")
+          "4. Press button 4 to replay audio.\n",
+          "5. Press button 5 to stop audio.\n")
     
     while True:
         try:
@@ -177,7 +179,19 @@ if __name__ == '__main__':
                     else:
                         pygame.mixer.music.unpause()
                         playing = True
-                        print("Audio played.\n")     
+                        print("Audio played.\n")
+            if GPIO.input(audioPin_replay) == False:
+                time.sleep(0.25)
+                if firstPlay:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.init()
+                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    playing = True
+                    print("Audio replayed.\n")
+                else:
+                   print("No audio is playing.\n")         
             if GPIO.input(audioPin_stop) == False:
                 time.sleep(0.25)
                 if firstPlay:
