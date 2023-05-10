@@ -157,6 +157,8 @@ if __name__ == '__main__':
     stopPin = 22
     camPin = 17
     audioPin_play = 23
+    audioPin_stop = 24
+    randomPin = 16
 
     # Pin Setup:
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -164,6 +166,7 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print("   Smart Reader begins.\n",
           "1. Press button 0 to stop. Hold button 0 to restart PI.\n",
@@ -194,19 +197,16 @@ if __name__ == '__main__':
                 playing = True
                 while True:
                     if GPIO.input(audioPin_play) == False:
-                        time.sleep(2)
-                        # Check if button is still being hold after 2 seconds
-                        if GPIO.input(audioPin_play) == False:
+                        if GPIO.input(audioPin_stop) == False:
                             pygame.mixer.music.stop()
                             print("Audio stopped.\n")
                             break
+                        if playing == True:
+                            pygame.mixer.music.pause()
+                            print("Audio paused.\n")
                         else:
-                            if playing == True:
-                                pygame.mixer.music.pause()
-                                print("Audio paused.\n")
-                            else:
-                                pygame.mixer.music.unpause()
-                                print("Audio played.\n")
+                            pygame.mixer.music.unpause()
+                            print("Audio played.\n")
         except Exception as e:
             print(e)
-            continue
+            break
