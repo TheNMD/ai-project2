@@ -125,8 +125,8 @@ if __name__ == '__main__':
     stopPin = 22
     camPin = 17
     audioPin_play = 23
-    audioPin_stop = 24
-    randomPin = 16
+    audioPin_replay = 24
+    audioPin_stop = 16
 
     # Pin Setup:
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -158,10 +158,10 @@ if __name__ == '__main__':
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
                 time.sleep(0.5)
-                if filename == "":
-                    print("No picture chosen.\n")
-                    continue
                 if not firstPlay:
+                    if filename == "":
+                        print("No picture chosen.\n")
+                        continue
                     pygame.mixer.init()
                     pygame.mixer.music.load('./audio/' + f"{filename}" + '.wav')
                     pygame.mixer.music.set_volume(0.5)
@@ -178,10 +178,19 @@ if __name__ == '__main__':
                         pygame.mixer.music.unpause()
                         playing = True
                         print("Audio played.\n")
+            if GPIO.input(audioPin_replay) == False:
+                time.sleep(0.5)
+                if firstPlay:
+                    pygame.mixer.music.rewind()
+                    playing = True
+                    print("Audio replayed.\n")
+                else:
+                   print("No audio is playing.\n")         
             if GPIO.input(audioPin_stop) == False:
                 time.sleep(0.5)
                 if firstPlay:
                     pygame.mixer.music.stop()
+                    pygame.mixer.music.unload()
                     playing = False
                     firstPlay = False
                     print("Audio ended.\n")
