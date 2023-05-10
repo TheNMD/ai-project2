@@ -208,12 +208,10 @@ if __name__ == '__main__':
                         pygame.mixer.music.pause()
                         playing = False
                         print("Audio paused.\n")
-                        break
                     else:
                         pygame.mixer.music.unpause()
                         playing = True
                         print("Audio played.\n")
-                        break
             if GPIO.input(audioPin_stop) == False:
                 if firstPlay:
                     pygame.mixer.music.stop()
