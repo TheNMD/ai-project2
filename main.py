@@ -197,16 +197,16 @@ if __name__ == '__main__':
                 playing = True
                 while True:
                     if GPIO.input(audioPin_play) == False:
-                        if GPIO.input(audioPin_stop) == False:
-                            pygame.mixer.music.stop()
-                            print("Audio stopped.\n")
-                            break
                         if playing == True:
                             pygame.mixer.music.pause()
                             print("Audio paused.\n")
                         else:
                             pygame.mixer.music.unpause()
                             print("Audio played.\n")
+                    if GPIO.input(audioPin_stop) == False:
+                        pygame.mixer.music.stop()
+                        print("Audio stopped.\n")
+                        break
         except Exception as e:
             print(e)
             break
