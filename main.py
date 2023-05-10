@@ -118,6 +118,7 @@ if __name__ == '__main__':
     # Audio condition
     firstPlay = False
     playing = False
+    filename = "sample1"
     
     
     # Pin Definitions:
@@ -153,13 +154,16 @@ if __name__ == '__main__':
                 print("Smart Reader has finished.\n")
                 break
             if GPIO.input(camPin) == False:
-                take_picture()
+                filename = take_picture()
                 print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
                 time.sleep(0.5)
+                if filename == "":
+                    print("No picture chosen.\n")
+                    continue
                 if not firstPlay:
                     pygame.mixer.init()
-                    pygame.mixer.music.load('./audio/' + "sample1" + '.wav')
+                    pygame.mixer.music.load('./audio/' + f"{filename}" + '.wav')
                     pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play(-1)
                     playing = True
@@ -169,7 +173,7 @@ if __name__ == '__main__':
                     if playing:
                         pygame.mixer.music.pause()
                         playing = False
-                        print("Audio paused.\n")
+                        print("Audio stopped.\n")
                     else:
                         pygame.mixer.music.unpause()
                         playing = True
@@ -180,7 +184,9 @@ if __name__ == '__main__':
                     pygame.mixer.music.stop()
                     playing = False
                     firstPlay = False
-                    print("Audio stopped.\n")
+                    print("Audio ended.\n")
+                else:
+                   print("No audio is playing.\n") 
         except Exception as e:
             print(e)
             break
