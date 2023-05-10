@@ -147,10 +147,18 @@ if __name__ == '__main__':
                 time.sleep(2)
                 # Check if button is still being hold after 2 seconds
                 if GPIO.input(stopPin) == False:
+                    if playing:
+                        pygame.mixer.music.stop()
+                        playing = False
+                        firstPlay = False
                     GPIO.cleanup()
                     print("Smart Reader has finished.\n")
                     os.system("reboot")
                 else:
+                    if playing:
+                        pygame.mixer.music.stop()
+                        playing = False
+                        firstPlay = False
                     GPIO.cleanup()
                     print("Smart Reader has finished.\n")
                     break
