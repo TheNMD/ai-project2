@@ -134,6 +134,7 @@ if __name__ == '__main__':
     GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     print("    Smart Reader begins.\n",
