@@ -218,7 +218,6 @@ if __name__ == '__main__':
                     playing = False
                     firstPlay = False
                     print("Audio stopped.\n")
-                    break
         except Exception as e:
             print(e)
             break
