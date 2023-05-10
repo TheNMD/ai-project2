@@ -154,7 +154,7 @@ if __name__ == '__main__':
     
     # Audio condition
     firstPlay = False
-    play = False
+    playing = False
     
     
     # Pin Definitons:
