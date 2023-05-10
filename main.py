@@ -147,6 +147,7 @@ def text2speech(textName):
 
 if __name__ == '__main__':
     # Pygame init
+    os.environ["DISPLAY"] = ":0"
     pygame.init()
     playing = False
     size = width, height = 320, 240
