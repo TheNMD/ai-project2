@@ -15,8 +15,6 @@ from pytesseract import pytesseract
 import pyttsx3
 import pygame
 
-
-
 def take_picture():
     dir_path = './raw_images'
     counter = 0
@@ -32,62 +30,62 @@ def take_picture():
     
     return image2text(f"sample{counter + 1}")
 
-def image2text(imageName):
+def imagePrepro(imageName):
+    def findDoc(contours):
+        for c in contours:
+            peri = cv2.arcLength(c, True)
+            approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+            if len(approx) == 4:
+                return approx
+        return None
+    
     original_img = cv2.imread(f'./raw_images/{imageName}.jpg')
     copy = original_img.copy()
 
-    # The resized height in hundreds
     ratio = original_img.shape[0] / 500.0
     resized_img = resize(original_img, height=500)
-    gray_image = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
-    blurred_img = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    gray_img = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
+    blurred_img = cv2.GaussianBlur(gray_img, (5, 5), 0)
     edged_img = cv2.Canny(blurred_img, 75, 200)
 
     contours, _ = cv2.findContours(edged_img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
-    for c in contours:
-        peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-        if len(approx) == 4:
-            rectangle = approx
-            break
+    
+    doc = findDoc(contours)
+    if doc is None:
+        return
         
-    for corner in rectangle:
+    for corner in doc:
         tuple_point = tuple(corner[0])
         cv2.circle(resized_img, tuple_point, 3, (0, 0, 255), 4)
   
-    warped_image = perspective_transform(copy, rectangle.reshape(4, 2) * ratio)
+    warped_image = perspective_transform(copy, doc.reshape(4, 2) * ratio)
     warped_image = cv2.cvtColor(warped_image, cv2.COLOR_BGR2GRAY)
     T = threshold_local(warped_image, 11, offset=10, method="gaussian")
     warped = (warped_image > T).astype("uint8") * 255
     
     cv2.imwrite(f'./processed_images/{imageName}.jpg', warped)
     
+    return image2text(imageName, warped)
+
+def image2text(imageName, img):
     # Comment the line below if run on Raspberry PI
     pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
-    text = pytesseract.image_to_string(warped)
+    text = pytesseract.image_to_string(img)
 
-    # Saving the extracted text
     with open(f'./texts/{imageName}.txt', "w+") as file:
         file.write(text)
         
-    return text2speech(imageName)
+    return text2speech(imageName, text)
 
-
-def text2speech(textName):
+def text2speech(textName, text):
     engine = pyttsx3.init()
-    
-    # The text that you want to convert to audio
-    with open(f'./texts/{textName}.txt', "r+") as file:
-        text = file.read()
 
-    # Setting voice sound and voice rate
     voices = engine.getProperty("voices")
     engine.setProperty("voice", voices[0].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150)
 
-    # Saving the audio in a mp3 format
     engine.save_to_file(text, f'./audio/{textName}.mp3')
 
     engine.runAndWait()
@@ -99,12 +97,12 @@ if __name__ == '__main__':
     pygame.init()
     size = width, height = 320, 240
     screen = pygame.display.set_mode(size)
+    pygame.mixer.init()
     
     # Audio condition
     firstPlay = False
     playing = False
-    filename = "sample2"
-    
+    filename = imagePrepro("sample2")
     
     # Pin Definitions:
     stopPin = 22
@@ -112,8 +110,6 @@ if __name__ == '__main__':
     audioPin_play = 23
     audioPin_replay = 24
     audioPin_stop = 16
-
-    test = image2text("sample2")
 
     # # Pin Setup:
     # GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -155,7 +151,6 @@ if __name__ == '__main__':
     #                 if filename == "":
     #                     print("No picture chosen.\n")
     #                     continue
-    #                 pygame.mixer.init()
     #                 pygame.mixer.music.load(f'./audio/{filename}.mp3')
     #                 pygame.mixer.music.set_volume(0.5)
     #                 pygame.mixer.music.play()
@@ -175,7 +170,6 @@ if __name__ == '__main__':
     #             time.sleep(0.25)
     #             if firstPlay:
     #                 pygame.mixer.music.stop()
-    #                 pygame.mixer.init()
     #                 pygame.mixer.music.load(f'./audio/{filename}.mp3')
     #                 pygame.mixer.music.set_volume(0.5)
     #                 pygame.mixer.music.play()
