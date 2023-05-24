@@ -3,8 +3,8 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 os.environ["DISPLAY"] = ":0"
 
-# import RPi.GPIO as GPIO
-# from picamera import PiCamera
+import RPi.GPIO as GPIO
+from picamera import PiCamera
 
 import cv2
 from imutils import resize
@@ -70,7 +70,7 @@ def imagePrepro(imageName):
 
 def image2text(imageName, img):
     # Comment the line below if run on Raspberry PI
-    pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
+    # pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
     text = pytesseract.image_to_string(img)
 
@@ -111,81 +111,81 @@ if __name__ == '__main__':
     audioPin_replay = 24
     audioPin_stop = 16
 
-    # # Pin Setup:
-    # GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    # Pin Setup:
+    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
 
-    # GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    # GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(stopPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(camPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_replay, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(audioPin_stop, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    # print(" #. Smart Reader begins.\n",
-    #       "1. Press button 1 to stop.\n",
-    #       "2. Press button 2 to take picture.\n",
-    #       "3. Press button 3 to play or pause audio.\n",
-    #       "4. Press button 4 to replay audio.\n",
-    #       "5. Press button 5 to stop audio.\n")
+    print(" #. Smart Reader begins.\n",
+          "1. Press button 1 to stop.\n",
+          "2. Press button 2 to take picture.\n",
+          "3. Press button 3 to play or pause audio.\n",
+          "4. Press button 4 to replay audio.\n",
+          "5. Press button 5 to stop audio.\n")
     
-    # while True:
-    #     try:
-    #         if GPIO.input(stopPin) == False:
-    #             time.sleep(0.25)
-    #             if playing:
-    #                 pygame.mixer.music.stop()
-    #                 playing = False
-    #                 firstPlay = False
-    #             GPIO.cleanup()
-    #             print("Smart Reader has finished.\n")
-    #             break
-    #         if GPIO.input(camPin) == False:
-    #             time.sleep(0.25)
-    #             if playing:
-    #                 print("Stop audio first.\n")
-    #                 continue
-    #             filename = take_picture()
-    #             print("Picture taken.\n")
-    #         if GPIO.input(audioPin_play) == False:
-    #             time.sleep(0.25)
-    #             if not firstPlay:
-    #                 if filename == "":
-    #                     print("No picture chosen.\n")
-    #                     continue
-    #                 pygame.mixer.music.load(f'./audio/{filename}.mp3')
-    #                 pygame.mixer.music.set_volume(0.5)
-    #                 pygame.mixer.music.play()
-    #                 playing = True
-    #                 firstPlay = True
-    #                 print("Audio played.\n")
-    #             else:
-    #                 if playing:
-    #                     pygame.mixer.music.pause()
-    #                     playing = False
-    #                     print("Audio stopped.\n")
-    #                 else:
-    #                     pygame.mixer.music.unpause()
-    #                     playing = True
-    #                     print("Audio played.\n")
-    #         if GPIO.input(audioPin_replay) == False:
-    #             time.sleep(0.25)
-    #             if firstPlay:
-    #                 pygame.mixer.music.stop()
-    #                 pygame.mixer.music.load(f'./audio/{filename}.mp3')
-    #                 pygame.mixer.music.set_volume(0.5)
-    #                 pygame.mixer.music.play()
-    #                 playing = True
-    #                 print("Audio replayed.\n")
-    #             else:
-    #                print("No audio is playing.\n")         
-    #         if GPIO.input(audioPin_stop) == False:
-    #             time.sleep(0.25)
-    #             if firstPlay:
-    #                 pygame.mixer.music.stop()
-    #                 playing = False
-    #                 firstPlay = False
-    #                 print("Audio ended.\n")
-    #             else:
-    #                print("No audio is playing.\n") 
-    #     except Exception as e:
-    #         print(e)
-    #         break
+    while True:
+        try:
+            if GPIO.input(stopPin) == False:
+                time.sleep(0.25)
+                if playing:
+                    pygame.mixer.music.stop()
+                    playing = False
+                    firstPlay = False
+                GPIO.cleanup()
+                print("Smart Reader has finished.\n")
+                break
+            if GPIO.input(camPin) == False:
+                time.sleep(0.25)
+                if playing:
+                    print("Stop audio first.\n")
+                    continue
+                filename = take_picture()
+                print("Picture taken.\n")
+            if GPIO.input(audioPin_play) == False:
+                time.sleep(0.25)
+                if not firstPlay:
+                    if filename == "":
+                        print("No picture chosen.\n")
+                        continue
+                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    playing = True
+                    firstPlay = True
+                    print("Audio played.\n")
+                else:
+                    if playing:
+                        pygame.mixer.music.pause()
+                        playing = False
+                        print("Audio stopped.\n")
+                    else:
+                        pygame.mixer.music.unpause()
+                        playing = True
+                        print("Audio played.\n")
+            if GPIO.input(audioPin_replay) == False:
+                time.sleep(0.25)
+                if firstPlay:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    playing = True
+                    print("Audio replayed.\n")
+                else:
+                   print("No audio is playing.\n")         
+            if GPIO.input(audioPin_stop) == False:
+                time.sleep(0.25)
+                if firstPlay:
+                    pygame.mixer.music.stop()
+                    playing = False
+                    firstPlay = False
+                    print("Audio ended.\n")
+                else:
+                   print("No audio is playing.\n") 
+        except Exception as e:
+            print(e)
+            break
