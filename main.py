@@ -151,7 +151,7 @@ if __name__ == '__main__':
             filename = imageProcessing(f"sample{counter + 1}")
             if filename == "errorContour":
                 print("Error: Contour.\n")
-                pygame.mixer.music.load(f'./audio/default/pictureTaken.wav')
+                pygame.mixer.music.load(f'./audio/default/errorContour.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
             else:
