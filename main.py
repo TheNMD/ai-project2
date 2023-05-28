@@ -3,8 +3,8 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 os.environ["DISPLAY"] = ":0"
 
-# import RPi.GPIO as GPIO
-# from picamera import PiCamera
+import RPi.GPIO as GPIO
+from picamera import PiCamera
 
 import cv2
 from imutils import resize
