@@ -83,6 +83,7 @@ if __name__ == '__main__':
     firstPlay = False
     playing = False
     filename =  "" # imageProcessing("sample2")
+    prev_filename = ""
     
     # Pin Definitions:
     stopPin = 22
@@ -154,11 +155,13 @@ if __name__ == '__main__':
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
                 os.remove(f'./raw_images/sample{counter + 1}.jpg')
+                filename = prev_filename
             else:
                 print("Picture taken.\n")
                 pygame.mixer.music.load(f'./audio/default/pictureTaken.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
+                prev_filename = filename
         if GPIO.input(audioPin_play) == False:
             time.sleep(0.25)
             if not firstPlay:
