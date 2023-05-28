@@ -109,90 +109,86 @@ if __name__ == '__main__':
           "5. Press button 5 to stop audio.\n")
     
     while True:
-        try:
-            if GPIO.input(stopPin) == False:
-                time.sleep(0.25)
-                if playing:
-                    pygame.mixer.music.stop()
-                    playing = False
-                    firstPlay = False
-                GPIO.cleanup()
-                print("Smart Reader has finished.\n")
-                pygame.mixer.music.load(f'./audio/default/finish.mp3')
+        if GPIO.input(stopPin) == False:
+            time.sleep(0.25)
+            if playing:
+                pygame.mixer.music.stop()
+                playing = False
+                firstPlay = False
+            GPIO.cleanup()
+            print("Smart Reader has finished.\n")
+            pygame.mixer.music.load(f'./audio/default/finish.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play()
+            break
+        if GPIO.input(camPin) == False:
+            time.sleep(0.25)
+            if playing:
+                print("Stop audio first.\n")
+                continue
+            dir_path = './raw_images'
+            counter = 0
+            for path in os.listdir(dir_path):
+                if os.path.isfile(os.path.join(dir_path, path)):
+                    counter += 1
+            camera = PiCamera()
+            camera.start_preview()
+            time.sleep(2)
+            while True:
+                if GPIO.input(camPin) == False:
+                    break
+            camera.capture(f'./raw_images/sample{counter + 1}.jpg')
+            camera.stop_preview()
+            camera.close()
+            filename = imageProcessing(f"sample{counter + 1}")
+            if filename == "errorContour":
+                pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
-                break
-            if GPIO.input(camPin) == False:
-                time.sleep(0.25)
-                if playing:
-                    print("Stop audio first.\n")
+                print("Error: Contour")
+            else:
+                pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play()
+                print("Picture taken.\n")
+        if GPIO.input(audioPin_play) == False:
+            time.sleep(0.25)
+            if not firstPlay:
+                if filename == "":
+                    print("No picture chosen.\n")
                     continue
-                dir_path = './raw_images'
-                counter = 0
-                for path in os.listdir(dir_path):
-                    if os.path.isfile(os.path.join(dir_path, path)):
-                        counter += 1
-                camera = PiCamera()
-                camera.start_preview()
-                time.sleep(2)
-                while True:
-                    if GPIO.input(camPin) == False:
-                        break
-                camera.capture(f'./raw_images/sample{counter + 1}.jpg')
-                camera.stop_preview()
-                camera.close()
-                filename = imageProcessing(f"sample{counter + 1}")
-                if filename == "errorContour":
-                    pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
-                    pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play()
-                    print("Error: Contour")
-                else:
-                    pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
-                    pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play()
-                    print("Picture taken.\n")
-            if GPIO.input(audioPin_play) == False:
-                time.sleep(0.25)
-                if not firstPlay:
-                    if filename == "":
-                        print("No picture chosen.\n")
-                        continue
-                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
-                    pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play()
-                    playing = True
-                    firstPlay = True
-                    print("Audio played.\n")
-                else:
-                    if playing:
-                        pygame.mixer.music.pause()
-                        playing = False
-                        print("Audio stopped.\n")
-                    else:
-                        pygame.mixer.music.unpause()
-                        playing = True
-                        print("Audio played.\n")
-            if GPIO.input(audioPin_replay) == False:
-                time.sleep(0.25)
-                if firstPlay:
-                    pygame.mixer.music.stop()
-                    pygame.mixer.music.load(f'./audio/{filename}.mp3')
-                    pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play()
-                    playing = True
-                    print("Audio replayed.\n")
-                else:
-                   print("No audio is playing.\n")         
-            if GPIO.input(audioPin_stop) == False:
-                time.sleep(0.25)
-                if firstPlay:
-                    pygame.mixer.music.stop()
+                pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play()
+                playing = True
+                firstPlay = True
+                print("Audio played.\n")
+            else:
+                if playing:
+                    pygame.mixer.music.pause()
                     playing = False
-                    firstPlay = False
-                    print("Audio ended.\n")
+                    print("Audio stopped.\n")
                 else:
-                   print("No audio is playing.\n") 
-        except Exception as e:
-            print(e)
-            break
+                    pygame.mixer.music.unpause()
+                    playing = True
+                    print("Audio played.\n")
+        if GPIO.input(audioPin_replay) == False:
+            time.sleep(0.25)
+            if firstPlay:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play()
+                playing = True
+                print("Audio replayed.\n")
+            else:
+                print("No audio is playing.\n")         
+        if GPIO.input(audioPin_stop) == False:
+            time.sleep(0.25)
+            if firstPlay:
+                pygame.mixer.music.stop()
+                playing = False
+                firstPlay = False
+                print("Audio ended.\n")
+            else:
+                print("No audio is playing.\n") 
