@@ -167,7 +167,7 @@ if __name__ == '__main__':
             if not firstPlay:
                 if filename == "":
                     print("No picture chosen.\n")
-                    pygame.mixer.music.load(f'./audio/noPicture.wav')
+                    pygame.mixer.music.load(f'./audio/default/noPicture.wav')
                     pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play()
                     continue
@@ -197,7 +197,7 @@ if __name__ == '__main__':
                 print("Audio replayed.\n")
             else:
                 print("No audio is playing.\n")
-                pygame.mixer.music.load(f'./audio/noAudio.wav')
+                pygame.mixer.music.load(f'./audio/default/noAudio.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()          
         if GPIO.input(audioPin_stop) == False:
@@ -209,6 +209,6 @@ if __name__ == '__main__':
                 print("Audio ended.\n")
             else:
                 print("No audio is playing.\n")
-                pygame.mixer.music.load(f'./audio/noAudio.wav')
+                pygame.mixer.music.load(f'./audio/default/noAudio.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play() 
