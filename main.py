@@ -134,7 +134,7 @@ if __name__ == '__main__':
                         counter += 1
                 camera = PiCamera()
                 camera.start_preview()
-                time.sleep(3)
+                time.sleep(2)
                 while True:
                     if GPIO.input(camPin) == False:
                         break
