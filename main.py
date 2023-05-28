@@ -67,7 +67,7 @@ def text2speech(textName, text):
     engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150)
 
-    engine.save_to_file(text, f'./audio/{textName}.mp3')
+    engine.save_to_file(text, f'./audio/{textName}.wav')
 
     engine.runAndWait()
     
@@ -107,7 +107,7 @@ if __name__ == '__main__':
           "4. Press button 4 to replay audio.\n",
           "5. Press button 5 to stop audio.\n")
     
-    pygame.mixer.music.load(f'./audio/default/begin.mp3')
+    pygame.mixer.music.load(f'./audio/default/begin.wav')
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play()
     
@@ -120,7 +120,7 @@ if __name__ == '__main__':
                 firstPlay = False
             GPIO.cleanup()
             print("Smart Reader has finished.\n")
-            pygame.mixer.music.load(f'./audio/default/finish.mp3')
+            pygame.mixer.music.load(f'./audio/default/finish.wav')
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play()
             break
@@ -137,7 +137,7 @@ if __name__ == '__main__':
             camera = PiCamera()
             camera.start_preview()
             print("Ready to take picture.\n")
-            pygame.mixer.music.load(f'./audio/default/ready.mp3')
+            pygame.mixer.music.load(f'./audio/default/ready.wav')
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play()
             # time.sleep(1)
@@ -150,12 +150,12 @@ if __name__ == '__main__':
             filename = imageProcessing(f"sample{counter + 1}")
             if filename == "errorContour":
                 print("Error: Contour.\n")
-                pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
+                pygame.mixer.music.load(f'./audio/default/pictureTaken.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
             else:
                 print("Picture taken.\n")
-                pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
+                pygame.mixer.music.load(f'./audio/default/pictureTaken.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
         if GPIO.input(audioPin_play) == False:
@@ -164,7 +164,7 @@ if __name__ == '__main__':
                 if filename == "":
                     print("No picture chosen.\n")
                     continue
-                pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                pygame.mixer.music.load(f'./audio/{filename}.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
                 playing = True
@@ -183,7 +183,7 @@ if __name__ == '__main__':
             time.sleep(0.25)
             if firstPlay:
                 pygame.mixer.music.stop()
-                pygame.mixer.music.load(f'./audio/{filename}.mp3')
+                pygame.mixer.music.load(f'./audio/{filename}.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
                 playing = True
