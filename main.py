@@ -154,7 +154,7 @@ if __name__ == '__main__':
                 pygame.mixer.music.load(f'./audio/default/errorContour.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
-                os.remove(f'./raw_images/sample{counter + 1}.jpg')
+                # os.remove(f'./raw_images/sample{counter + 1}.jpg')
                 filename = prev_filename
             else:
                 print("Picture taken.\n")
