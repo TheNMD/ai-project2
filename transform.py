@@ -30,13 +30,13 @@ def perspective_transform(image, pts):
 
     '''compute the width of the new image, which will be the
     maximum distance between bottom-right and bottom-left
-    x-coordinates or the top-right and top-left x-coordinates'''
+    or the top-right and top-left'''
     widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
     widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
     maxWidth = max(int(widthA), int(widthB))
 
     '''compute the height of the new image, which will be the
-    maximum distance between the top-left and bottom-left y-coordinates'''
+    maximum distance between the top-left and bottom-left or top-right and bottom-right'''
     heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
     heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
     maxHeight = max(int(heightA), int(heightB))

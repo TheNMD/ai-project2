@@ -3,34 +3,18 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 os.environ["DISPLAY"] = ":0"
 
-import RPi.GPIO as GPIO
-from picamera import PiCamera
+# import RPi.GPIO as GPIO
+# from picamera import PiCamera
 
 import cv2
 from imutils import resize
-from skimage.filters import threshold_local
 from transform import perspective_transform
 from pytesseract import pytesseract
 
 import pyttsx3
 import pygame
 
-def take_picture():
-    dir_path = './raw_images'
-    counter = 0
-    for path in os.listdir(dir_path):
-        if os.path.isfile(os.path.join(dir_path, path)):
-            counter += 1
-    camera = PiCamera()
-    camera.start_preview()
-    time.sleep(10)
-    camera.capture(f'./raw_images/sample{counter + 1}.jpg')
-    camera.stop_preview()
-    camera.close()
-    
-    return image2text(f"sample{counter + 1}")
-
-def imagePrepro(imageName):
+def imageProcessing(imageName):
     def findDoc(contours):
         for c in contours:
             peri = cv2.arcLength(c, True)
@@ -47,26 +31,23 @@ def imagePrepro(imageName):
     gray_img = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
     blurred_img = cv2.GaussianBlur(gray_img, (5, 5), 0)
     edged_img = cv2.Canny(blurred_img, 75, 200)
-
+    
     contours, _ = cv2.findContours(edged_img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
-    
     doc = findDoc(contours)
     if doc is None:
-        return
-        
+        return "errorContour"
     for corner in doc:
         tuple_point = tuple(corner[0])
         cv2.circle(resized_img, tuple_point, 3, (0, 0, 255), 4)
-  
-    warped_image = perspective_transform(copy, doc.reshape(4, 2) * ratio)
-    warped_image = cv2.cvtColor(warped_image, cv2.COLOR_BGR2GRAY)
-    T = threshold_local(warped_image, 11, offset=10, method="gaussian")
-    warped = (warped_image > T).astype("uint8") * 255
     
-    cv2.imwrite(f'./processed_images/{imageName}.jpg', warped)
+    warped_img = perspective_transform(copy, doc.reshape(4, 2) * ratio)
+    warped_img = cv2.cvtColor(warped_img, cv2.COLOR_BGR2GRAY)
+    ret, thresh_img = cv2.threshold(warped_img, 120, 255, cv2.THRESH_BINARY)
     
-    return image2text(imageName, warped)
+    cv2.imwrite(f'./processed_images/{imageName}.jpg', thresh_img)
+    
+    return image2text(imageName, warped_img)
 
 def image2text(imageName, img):
     # Comment the line below if run on Raspberry PI
@@ -102,7 +83,7 @@ if __name__ == '__main__':
     # Audio condition
     firstPlay = False
     playing = False
-    filename = imagePrepro("sample2")
+    filename =  "" # imageProcessing("sample2")
     
     # Pin Definitions:
     stopPin = 22
@@ -137,14 +118,37 @@ if __name__ == '__main__':
                     firstPlay = False
                 GPIO.cleanup()
                 print("Smart Reader has finished.\n")
+                pygame.mixer.music.load(f'./audio/default/finish.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play()
                 break
             if GPIO.input(camPin) == False:
                 time.sleep(0.25)
                 if playing:
                     print("Stop audio first.\n")
                     continue
-                filename = take_picture()
-                print("Picture taken.\n")
+                dir_path = './raw_images'
+                counter = 0
+                for path in os.listdir(dir_path):
+                    if os.path.isfile(os.path.join(dir_path, path)):
+                        counter += 1
+                camera = PiCamera()
+                camera.start_preview()
+                time.sleep(10)
+                camera.capture(f'./raw_images/sample{counter + 1}.jpg')
+                camera.stop_preview()
+                camera.close()
+                filename = imageProcessing(f"sample{counter + 1}")
+                if filename == "errorContour":
+                    pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    print("Error: Contour")
+                else:
+                    pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    print("Picture taken.\n")
             if GPIO.input(audioPin_play) == False:
                 time.sleep(0.25)
                 if not firstPlay:
