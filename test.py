@@ -19,7 +19,7 @@ def text2speech(textName, text):
     
     return textName
 
-with open(f'./texts/default/ready.txt', "r+") as file:
+with open(f'./texts/default/begin.txt', "r+") as file:
         text = file.read()
         
-text2speech("ready", text) 
+text2speech("begin", text) 

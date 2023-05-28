@@ -108,6 +108,10 @@ if __name__ == '__main__':
           "4. Press button 4 to replay audio.\n",
           "5. Press button 5 to stop audio.\n")
     
+    pygame.mixer.music.load(f'./audio/default/begin.mp3')
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play()
+    
     while True:
         if GPIO.input(stopPin) == False:
             time.sleep(0.25)
