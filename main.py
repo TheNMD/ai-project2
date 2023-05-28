@@ -76,8 +76,7 @@ def text2speech(textName, text):
 if __name__ == '__main__':
     # Pygame init
     pygame.init()
-    size = width, height = 320, 240
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode((1,1))
     pygame.mixer.init()
     
     # Audio condition
