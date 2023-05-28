@@ -64,7 +64,7 @@ def text2speech(textName, text):
     engine = pyttsx3.init()
 
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[0].id) # voices[0] if run on Windows, voices[11] if run on PI
+    engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
     engine.setProperty("rate", 150)
 
     engine.save_to_file(text, f'./audio/{textName}.mp3')
