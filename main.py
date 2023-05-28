@@ -141,7 +141,6 @@ if __name__ == '__main__':
             pygame.mixer.music.load(f'./audio/default/ready.wav')
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play()
-            # time.sleep(1)
             while True:
                 if GPIO.input(camPin) == False:
                     break
@@ -154,6 +153,7 @@ if __name__ == '__main__':
                 pygame.mixer.music.load(f'./audio/default/errorContour.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
+                os.remove(f'./raw_images/sample{counter + 1}.jpg')
             else:
                 print("Picture taken.\n")
                 pygame.mixer.music.load(f'./audio/default/pictureTaken.wav')
