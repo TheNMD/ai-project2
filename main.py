@@ -58,9 +58,12 @@ def image2text(imageName, img):
     with open(f'./texts/{imageName}.txt', "w+") as file:
         file.write(text)
         
-    return text2speech(imageName, text)
+    return text2speech(imageName)
 
-def text2speech(textName, text):
+def text2speech(textName):
+    with open(f'./texts/{textName}.txt', "r+", encoding='utf-8') as file:
+        text = file.read()
+    
     engine = pyttsx3.init()
 
     voices = engine.getProperty("voices")
