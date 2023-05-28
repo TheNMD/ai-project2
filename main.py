@@ -123,7 +123,7 @@ if __name__ == '__main__':
             pygame.mixer.music.load(f'./audio/default/finish.wav')
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play()
-            time.sleep(3)
+            time.sleep(1.5)
             break
         if GPIO.input(camPin) == False:
             time.sleep(0.25)
