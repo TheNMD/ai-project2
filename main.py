@@ -134,6 +134,10 @@ if __name__ == '__main__':
             camera = PiCamera()
             camera.start_preview()
             time.sleep(2)
+            print("Ready to take picture.\n")
+            pygame.mixer.music.load(f'./audio/default/ready.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play()
             while True:
                 if GPIO.input(camPin) == False:
                     break
