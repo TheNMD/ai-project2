@@ -82,10 +82,10 @@ if __name__ == '__main__':
     # Audio condition
     firstPlay = False
     playing = False
-    filename =  "" # imageProcessing("sample2")
+    filename =  ""
     prev_filename = ""
     
-    # Pin Definitions:
+    # Pin definition:
     stopPin = 22
     camPin = 17
     audioPin_play = 23
