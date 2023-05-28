@@ -142,15 +142,15 @@ if __name__ == '__main__':
             camera.close()
             filename = imageProcessing(f"sample{counter + 1}")
             if filename == "errorContour":
+                print("Error: Contour.\n")
                 pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
-                print("Error: Contour")
             else:
+                print("Picture taken.\n")
                 pygame.mixer.music.load(f'./audio/default/pictureTaken.mp3')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
-                print("Picture taken.\n")
         if GPIO.input(audioPin_play) == False:
             time.sleep(0.25)
             if not firstPlay:
