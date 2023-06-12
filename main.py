@@ -64,15 +64,15 @@ def text2speech(textName):
     with open(f'./texts/{textName}.txt', "r+", encoding='utf-8') as file:
         text = file.read()
     
-    engine = pyttsx3.init()
+    # engine = pyttsx3.init()
 
-    voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
-    engine.setProperty("rate", 150)
+    # voices = engine.getProperty("voices")
+    # engine.setProperty("voice", voices[11].id) # voices[0] if run on Windows, voices[11] if run on PI
+    # engine.setProperty("rate", 150)
 
-    engine.save_to_file(text, f'./audio/{textName}.wav')
+    # engine.save_to_file(text, f'./audio/{textName}.wav')
 
-    engine.runAndWait()
+    # engine.runAndWait()
     
     return textName 
 
@@ -157,7 +157,7 @@ if __name__ == '__main__':
                 pygame.mixer.music.load(f'./audio/default/errorContour.wav')
                 pygame.mixer.music.set_volume(0.5)
                 pygame.mixer.music.play()
-                # os.remove(f'./raw_images/sample{counter + 1}.jpg')
+                os.remove(f'./raw_images/sample{counter + 1}.jpg')
                 filename = prev_filename
             else:
                 print("Picture taken.\n")
